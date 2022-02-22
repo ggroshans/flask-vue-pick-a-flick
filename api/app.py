@@ -7,3 +7,5 @@ CORS(app)
 @app.route("/greeting")
 def greeting():
     return {"test": "TEST"}
+
+app.run(debug=True)

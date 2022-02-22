@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Book Match</h1>
+        <h1>Blind Book Date</h1>
         <p>{{pTag}}</p>
     </div>
 </template>
@@ -20,12 +20,14 @@
             console.log('response', resp)
             const obj = await resp.json();
             console.log("obj", obj);
-            this.pTag = obj.greeting; 
+            this.pTag = obj.test; 
         }
     }
     
 </script>
 
 <style scoped>
-
+    h1 {
+        font-family: 'Lobster Two';
+    }
 </style>
