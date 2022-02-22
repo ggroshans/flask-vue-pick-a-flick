@@ -21,6 +21,9 @@
         <input type="submit" value="Login" class="btn btn-primary float-right" />
       </div>
     </form>
+    <div>
+        <p>Don't have any account? <router-link to="/register">Register Here</router-link></p>
+    </div>
   </div>
 </template>
 
