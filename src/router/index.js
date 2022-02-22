@@ -3,17 +3,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/auth/Login'
-// import HelloWorld from '@/components/HelloWorld'
+import Splash from '../components/Splash'
+
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   name: 'HelloWorld',
-    //   component: HelloWorld
-    // }
+
+    {
+      path: '/',
+      name: 'Splash',
+      component: Splash,
+    },
     {
       path: '/login',
       name: 'Login',

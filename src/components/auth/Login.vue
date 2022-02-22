@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Blind Book Date</h1>
+        <h1>Book Date</h1>
         <p>{{pTag}}</p>
     </div>
 </template>
