@@ -26,7 +26,7 @@ def login():
     return {"test": "TEST"}
 
 
-@app.route("/register", ["POST"])
+@app.route("/register", methods=["POST"])
 def register():
     
     return {"test": "TEST"}

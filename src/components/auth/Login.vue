@@ -32,16 +32,10 @@
 export default {
   data() {
     return {
-      pTag: null
+      
     };
   },
-  async created() {
-    const resp = await fetch("http://localhost:5000/greeting");
-    console.log("response", resp);
-    const obj = await resp.json();
-    console.log("obj", obj);
-    this.pTag = obj.test;
-  }
+
 };
 </script>
 
