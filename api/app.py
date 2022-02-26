@@ -1,6 +1,6 @@
 from enum import unique
 import os
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
@@ -26,8 +26,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable=False)
 
     def __init__ (self, username, password):
-        username = self.username
-        password = self.password
+        self.username = username
+        self.password = password
 
 @app.route("/login")
 def login():
@@ -38,15 +38,23 @@ def login():
 def register():
 
     data = request.get_json()
-    print(data)
+
     username = data['username']
     password = data['password']
+
+    print(User.query.filter_by(username=username).first())
 
     if User.query.filter_by(username=username).first():
         print("username already exists")
     else:
-        hashed_password = bcrypt.hashpw(password,bcrypt.gensalt())
+        print(type(password))
+        hashed_password = bcrypt.hashpw(bytes(password, 'utf-8'),bcrypt.gensalt())
 
+        print(hashed_password)
+        
+        user = User(username, hashed_password)
+        print(user)
+        db.session.add(user)
+        db.session.commit()
 
-    return {"test": "TEST"}
-
+    return ""
