@@ -22,11 +22,11 @@
         <input type="checkbox" />Remember Me
       </div> -->
       <div class="form-group">
-        <input
-          @click="submitRegistration"
+        <button
+          @click.prevent="submitRegistration"
           type="submit"
           class="btn btn-primary float-right"
-        />
+        >Submit</button>
       </div>
     </form>
     <div>
@@ -40,7 +40,7 @@
 
 <script>
 /* eslint-disable */
-export default {
+export default {                                               
   data() {
     return {
       username: null,
@@ -49,8 +49,7 @@ export default {
   },
   methods: {
     async submitRegistration() {
-
-
+      console.log("fired")
     const resp = await fetch("http://localhost:5000/register", {
       method: "POST",
       headers: {
@@ -62,6 +61,8 @@ export default {
       })
     });
     console.log(resp.json());
+    this.username = "";
+    this.password = "";
     }
   }
 
