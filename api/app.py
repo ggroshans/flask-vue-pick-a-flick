@@ -29,31 +29,40 @@ class User(db.Model, UserMixin):
         self.username = username
         self.password = password
 
-@app.route("/login")
+@app.route("/login", methods=["POST"])
 def login():
-    return {"test": "TEST"}
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
+
+    user = User.query.filter_by(username=username).first()
+    
+    if user:
+        if bcrypt.checkpw(bytes(password, 'utf-8'), user.password):
+            print("Password matches")
+        else:
+            print("Password does not match")
+
+    return jsonify({})
 
 
 @app.route("/register", methods=["POST"])
 def register():
 
     data = request.get_json()
-
     username = data['username']
     password = data['password']
 
     print(User.query.filter_by(username=username).first())
 
     if User.query.filter_by(username=username).first():
-        print("username already exists")
+        print("Username already exists")
+        
     else:
-        print(type(password))
         hashed_password = bcrypt.hashpw(bytes(password, 'utf-8'),bcrypt.gensalt())
-
-        print(hashed_password)
         
         user = User(username, hashed_password)
-        print(user)
+
         db.session.add(user)
         db.session.commit()
 

@@ -8,7 +8,12 @@
             ><b-icon icon="person-fill"></b-icon
           ></span>
         </div>
-        <input type="text" class="form-control" placeholder="username"  v-model="username" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="username"
+          v-model="username"
+        />
       </div>
       <div class="input-group form-group">
         <div class="input-group-prepend">
@@ -16,7 +21,12 @@
             ><b-icon icon="key-fill"></b-icon
           ></span>
         </div>
-        <input type="password" class="form-control" placeholder="password" v-model="password"/>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="password"
+          v-model="password"
+        />
       </div>
       <!-- <div class="row align-items-center remember">
         <input type="checkbox" />Remember Me
@@ -26,7 +36,9 @@
           @click.prevent="submitLogin"
           value="Login"
           class="btn btn-primary float-right"
-        >Submit</button>
+        >
+          Submit
+        </button>
       </div>
     </form>
     <div>
@@ -47,22 +59,23 @@ export default {
       password: null
     };
   },
-      async submitLogin() {
-      console.log("fired")
-    const resp = await fetch("http://localhost:5000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "username": this.username,
-        "password": this.password
-      })
-    });
-    this.username = "";
-    this.password = "";
+  methods: {
+    async submitLogin() {
+      console.log("fired");
+      const resp = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: this.username,
+          password: this.password
+        })
+      });
+      this.username = "";
+      this.password = "";
     }
-
+  }
 };
 </script>
 
