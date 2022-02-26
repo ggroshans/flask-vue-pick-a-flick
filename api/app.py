@@ -4,6 +4,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
+import bcrypt
 
 app = Flask(__name__)
 CORS(app)                                   
@@ -24,6 +25,9 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
 
+    def __init__ (self, username, password):
+        username = self.username
+        password = self.password
 
 @app.route("/login")
 def login():
@@ -33,7 +37,16 @@ def login():
 @app.route("/register", methods=["POST"])
 def register():
 
-    print(request.get_json())
-    print(request.get_data())
+    data = request.get_json()
+    print(data)
+    username = data['username']
+    password = data['password']
+
+    if User.query.filter_by(username=username).first():
+        print("username already exists")
+    else:
+        hashed_password = bcrypt.hashpw(password,bcrypt.gensalt())
+
+
     return {"test": "TEST"}
 
