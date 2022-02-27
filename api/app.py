@@ -38,12 +38,11 @@ def login():
     
     if user:
         if bcrypt.checkpw(bytes(password, 'utf-8'), user.password):
-            jsonify({"success": "user access granted"})
+            return jsonify({"success": "user access granted"})
         else:
-            print("Password does not match")
-            jsonify({"error": {"password" :"Passwords do not match"}})
+            return jsonify({"error": {"password" :"Passwords do not match"}})
     else:
-        return jsonify({"error": {"username":"This Username does not exist"}})
+        return jsonify({"error": {"username":"This username does not exist"}})
 
 
 
