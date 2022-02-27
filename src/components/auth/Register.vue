@@ -60,7 +60,8 @@ export default {
         "password": this.password
       })
     });
-    console.log(resp.json());
+    responseData = await resp.json();
+    console.log('response data', responseData);
     this.username = "";
     this.password = "";
     }
