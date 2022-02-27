@@ -9,6 +9,8 @@ Flask-Cors = "*"
 Flask-SQLAlchemy = "*"
 Flask-Login = "*"
 Flask-Bcrypt = "*"
+requests = "*"
+python-dotenv = "*"
 
 [dev-packages]
 

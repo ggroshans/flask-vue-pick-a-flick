@@ -5,9 +5,11 @@ from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user 
 import bcrypt
+import requests
 
 app = Flask(__name__)
-CORS(app)                                   
+CORS(app)
+                           
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -50,30 +52,32 @@ def login():
         return jsonify({"error": {"username":"This username does not exist"}})
 
 
-
 @app.route("/register", methods=["POST"])
 def register():
-
     data = request.get_json()
     username = data['username']
     password = data['password']
-
-    print(User.query.filter_by(username=username).first())
 
     if User.query.filter_by(username=username).first():
         return jsonify({"error": "Username already exists"})
         
     else:
         hashed_password = bcrypt.hashpw(bytes(password, 'utf-8'),bcrypt.gensalt())
-        
         user = User(username, hashed_password)
 
         db.session.add(user)
         db.session.commit()
         return jsonify({"success": "User registered"})
-    return ""
+
 
 @app.route('/logout', methods=["GET", "POST"])
 @login_required
 def logout():
     logout_user()
+
+@app.route('/categories')
+def categories():
+    key = os.getenv('NYT_KEY')
+    response = requests.get(f"https://api.nytimes.com/svc/books/v3/lists/names.json?api-key={key}")
+    print('key', key)
+    return jsonify({"data": response.json()})
