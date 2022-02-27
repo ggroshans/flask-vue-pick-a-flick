@@ -18,7 +18,7 @@
       <div v-if="errorMsg" class="error-message text-left">
         {{ errorMsg }}
       </div>
-      <div class="input-group form-group mt-2">
+      <div class="input-group form-group mt-3">
         <div class="input-group-prepend">
           <span class="input-group-text"
             ><b-icon icon="key-fill"></b-icon
