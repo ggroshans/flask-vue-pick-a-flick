@@ -58,6 +58,7 @@
 
 <script>
 /* eslint-disable */
+import router from '../../router'
 export default {
   data() {
     return {
@@ -93,11 +94,7 @@ export default {
           this.passwordError = responseData["error"]["password"];
         }
       } else {
-        //eventually delete code below and place reroute 
-        this.usernameError = "";
-        this.passwordError = "";
-        this.username = "";
-        this.password = "";
+        router.push('categories')
       }
     }
   }
