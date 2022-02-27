@@ -41,9 +41,9 @@ def login():
             jsonify({"success": "user access granted"})
         else:
             print("Password does not match")
-            jsonify({"error": "Passwords do not match"})
+            jsonify({"error": {"password" :"Passwords do not match"}})
     else:
-        return jsonify({"error": "This Username does not exist"})
+        return jsonify({"error": {"username":"This Username does not exist"}})
 
 
 
