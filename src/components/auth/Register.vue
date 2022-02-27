@@ -85,6 +85,7 @@ export default {
       if (responseData["error"]) {
         this.errorMsg = responseData["error"];
       } else {
+        //eventually delete code below and place reroute
         this.errorMsg = "";
         this.username = "";
         this.password = "";

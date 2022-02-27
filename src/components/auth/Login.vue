@@ -93,6 +93,7 @@ export default {
           this.passwordError = responseData["error"]["password"];
         }
       } else {
+        //eventually delete code below and place reroute 
         this.usernameError = "";
         this.passwordError = "";
         this.username = "";
