@@ -39,11 +39,13 @@ def login():
     
     if user:
         if bcrypt.checkpw(bytes(password, 'utf-8'), user.password):
-            print("Password matches")
+            jsonify({"success": "user access granted"})
         else:
             print("Password does not match")
+            jsonify({"error": "Passwords do not match"})
+    else:
+        return jsonify({"error": "This user does not exist"})
 
-    return jsonify({})
 
 
 @app.route("/register", methods=["POST"])
