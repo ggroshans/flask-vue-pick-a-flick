@@ -96,8 +96,17 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+  font-family: "Lobster Two";
+  font-weight: 600;
+  font-size: 3rem;
+}
 .error-message {
   color: tomato;
   font-weight: 500;
+}
+
+.container {
+  max-width: 500px;
 }
 </style>

@@ -107,9 +107,15 @@ export default {
 <style scoped>
 h1 {
   font-family: "Lobster Two";
+  font-weight: 600;
+  font-size: 3rem;  font-family: "Lobster Two";
 }
 .username-error, .password-error {
   color: tomato;
   font-weight: 600;
 }
+.container {
+  max-width: 500px;
+}
+
 </style>
