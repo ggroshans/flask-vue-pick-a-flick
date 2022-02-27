@@ -43,7 +43,7 @@ def login():
             print("Password does not match")
             jsonify({"error": "Passwords do not match"})
     else:
-        return jsonify({"error": "This user does not exist"})
+        return jsonify({"error": "This Username does not exist"})
 
 
 
@@ -57,7 +57,7 @@ def register():
     print(User.query.filter_by(username=username).first())
 
     if User.query.filter_by(username=username).first():
-        jsonify({"error": "Username already exists"})
+        return jsonify({"error": "Username already exists"})
         
     else:
         hashed_password = bcrypt.hashpw(bytes(password, 'utf-8'),bcrypt.gensalt())
@@ -66,5 +66,5 @@ def register():
 
         db.session.add(user)
         db.session.commit()
-
+        return jsonify({"success": "User registered"})
     return ""
