@@ -5,14 +5,13 @@ import Router from 'vue-router'
 import Login from '../components/auth/Login'
 import Register from '../components/auth/Register'
 import Splash from '../components/Splash'
-import Categories from '../components/Categories.vue'
+import CategoryList from '../components/CategoryList.vue'
 
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-
     {
       path: '/',
       name: 'Splash',
@@ -29,9 +28,9 @@ export default new Router({
       component: Register
     },
     {
-      path: '/categories',
-      name: 'Categories',
-      component: Categories
+      path: '/categorylist',
+      name: 'CategoryList',
+      component: CategoryList
     }
   ]
 })

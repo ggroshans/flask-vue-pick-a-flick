@@ -14,7 +14,7 @@
     </router-link>
     </div>
     <div class="row mt-3 justify-content-center">
-    <router-link to="">
+    <router-link to="/categories">
       <button class="btn btn-primary">Continue as Guest</button>
     </router-link>
     </div>

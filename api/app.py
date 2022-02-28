@@ -12,10 +12,10 @@ CORS(app)
                            
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 db = SQLAlchemy(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SECRET_KEY'] = 'secret_key'
+app.config['SECRET_KEY'] = SECRET_KEY
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -75,9 +75,17 @@ def register():
 def logout():
     logout_user()
 
-@app.route('/categories')
+@app.route('/categorylist')
 def categories():
     key = os.getenv('NYT_KEY')
     response = requests.get(f"https://api.nytimes.com/svc/books/v3/lists/names.json?api-key={key}")
-    print('key', key)
+    return jsonify({"data": response.json()})
+
+@app.route('/category', methods=["GET", "POST"])
+def category():
+    data = request.get_json()
+    category = data['category']
+    print("CATEGORY", category)
+    key = os.getenv('NYT_KEY')
+    response = requests.get(f"https://api.nytimes.com/svc/books/v3//lists/current/{category}.json?api-key={key}")
     return jsonify({"data": response.json()})
