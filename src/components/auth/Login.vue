@@ -94,7 +94,7 @@ export default {
           this.passwordError = responseData["error"]["password"];
         }
       } else {
-        router.push('categories')
+        router.push('books')
       }
     }
   }
