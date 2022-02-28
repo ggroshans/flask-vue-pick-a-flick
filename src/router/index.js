@@ -6,6 +6,7 @@ import Login from '../components/auth/Login'
 import Register from '../components/auth/Register'
 import Splash from '../components/Splash'
 import CategoryList from '../components/CategoryList.vue'
+import Category from '../components/Category.vue'
 
 
 Vue.use(Router)
@@ -31,6 +32,11 @@ export default new Router({
       path: '/categorylist',
       name: 'CategoryList',
       component: CategoryList
+    },
+    {
+      path: '/categorylist/:category',
+      name: 'Category',
+      component: Category
     }
   ]
 })

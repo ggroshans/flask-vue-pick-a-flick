@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link v-for="category in categoryList" :key="category" to="category"> <category :category="category"></category> </router-link>
+        <router-link v-for="category in categoryList" :key="category" :to="{name: 'Category', params: {category: category.list_name_encoded}}">{{category.display_name}}</router-link>
     </div>
 </template>
 
