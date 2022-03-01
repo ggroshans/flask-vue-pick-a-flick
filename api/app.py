@@ -81,15 +81,33 @@ def books():
     response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=9420&api-key={key}')
     return jsonify({"data": response.json()})
 
-# @app.route('/category', methods=["GET", "POST"])
-# def category():
-#     data = request.get_json()
-#     category = data['category']
-#     print("CATEGORY", category)
+# @app.route('/books')
+# def books():
 #     key = os.getenv('NYT_KEY')
-#     # response = requests.get(f"https://api.nytimes.com/svc/books/v3//lists/history/{category}.json?api-key={key}&offset=40")
 #     response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=9420&api-key={key}')
-#     return jsonify({"data": response.json()})
+#     books = response.json()['results']
+#     for book in books:
+#         if book['isbns']:
+#             isbn = book['isbns'][0]['isbn13']
+#             response = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc')
+            
+#             resp_json = response.json()
+#             print(resp_json['items'])
+#             if 'items' in resp_json and resp_json['items'][0]['searchInfo']['textSnippet']:
+#                 book['snippet'] = resp_json['items'][0]['searchInfo']['textSnippet']
+#     return jsonify({"data": books})
+
+
+
+@app.route('/category', methods=["GET", "POST"])
+def category():
+    data = request.get_json()
+    category = data['category']
+    print("CATEGORY", category)
+    key = os.getenv('NYT_KEY')
+    # response = requests.get(f"https://api.nytimes.com/svc/books/v3//lists/history/{category}.json?api-key={key}&offset=40")
+    response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=9420&api-key={key}')
+    return jsonify({"data": response.json()})
 
 @app.route('/description', methods=["GET", "POST"])
 def description():
