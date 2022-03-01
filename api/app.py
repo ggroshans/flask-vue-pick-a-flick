@@ -76,7 +76,7 @@ def logout():
     logout_user()
 
 @app.route('/books')
-def categories():
+def books():
     key = os.getenv('NYT_KEY')
     response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=9420&api-key={key}')
     return jsonify({"data": response.json()})
@@ -90,3 +90,12 @@ def categories():
 #     # response = requests.get(f"https://api.nytimes.com/svc/books/v3//lists/history/{category}.json?api-key={key}&offset=40")
 #     response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=9420&api-key={key}')
 #     return jsonify({"data": response.json()})
+
+@app.route('/description', methods=["GET", "POST"])
+def description():
+    key = os.getenv('GOOG_KEY')
+    data = request.get_json()
+    isbn = data['isbn']
+    print(data, "DATA")
+    response = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc')
+    return jsonify({"data": response.json()})
