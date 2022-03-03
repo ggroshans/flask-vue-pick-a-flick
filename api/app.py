@@ -78,7 +78,7 @@ def logout():
 @app.route('/books')
 def books():
     key = os.getenv('NYT_KEY')
-    response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=9420&api-key={key}')
+    response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=700&api-key={key}')
     return jsonify({"data": response.json()})
 
 # @app.route('/books')

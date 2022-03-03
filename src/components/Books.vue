@@ -1,40 +1,46 @@
 <template>
-  <div>
-    <!-- <router-link v-for="book in bookList" :key="book" :to="{name: 'Book', params: {book: book.list_name_encoded}}">{{category.display_name}}</router-link> -->
+  <!-- <div class="card-container">
+    <div
+      ><li v-if="bookList.length > 0" v-html="bookList[0].title"></li
+    ></div>
 
-    <!-- <ul v-for="book in bookList" :key="book.primary_isbn10"><li>{{book}}</li></ul> -->
-    <vue-swing
-      :config="config"
-      @throwout = swiped()
-      class="swipe"
-      ><li v-if="bookList.length > 0" v-html="bookList[0].snippet"></li
-    ></vue-swing>
 
-  </div>
+
+
+  </div> -->
+
+  <section class="card-container">
+    <div class="fixed-center">
+      <Vue2InteractDraggable
+        :interact-out-of-sight-x-coordinate="1000"
+        :interact-max-rotation="15"
+        :interact-x-threshold="200"
+        :interact-y-threshold="200"
+        class="rounded-borders shadow-10 card"
+      >
+        <div class="card__main" v-if="bookList.length > 0" v-html="bookList[0].title"></div>
+      </Vue2InteractDraggable>
+    </div>
+  </section>
 </template>
 
 <script>
 /* eslint-disable */
-import Category from "./Book.vue";
-import VueSwing from "vue-swing";
+import Book from "./Book.vue";
+import { Vue2InteractDraggable } from "vue2-interact";
 export default {
   data() {
     return {
-      bookList: [],
-      config: {
-        allowedDirections: [VueSwing.Direction.LEFT, VueSwing.Direction.RIGHT],
-        minThrowDistance: 250,
-        maxThrowDistance: 300
-      }
+      bookList: []
     };
   },
   components: {
-    Category,
-    VueSwing
+    Book,
+    Vue2InteractDraggable
   },
   methods: {
     swiped(book) {
-        this.bookList.shift()
+      this.bookList.shift();
     },
     async getDescription(bookList) {
       for (let i = 0; i < bookList.length; i++) {
@@ -57,18 +63,18 @@ export default {
             responseData.data.items &&
             responseData.data.items[0].searchInfo.textSnippet
           ) {
-            console.log("fired")
+            console.log("fired");
             bookList[i]["snippet"] =
               responseData.data.items[0].searchInfo.textSnippet;
             this.bookList.push(bookList[i]);
-            console.log("BOOKLIST", this.boo)
+            console.log("BOOKLIST", this.bookList);
           }
         }
       }
       //if the bookList is under 100 in queue then grab more
-    //   if (this.bookList.length < 100) {
-    //     this.getBookList();
-    //   }
+      //   if (this.bookList.length < 100) {
+      //     this.getBookList();
+      //   }
     },
     async getBookList() {
       const resp = await fetch("http://localhost:5000/books", {
@@ -79,23 +85,37 @@ export default {
       });
       let responseData = await resp.json(responseData);
       console.log("CATEGORY LIST WHOLE", responseData);
-      this.getDescription(responseData.data.results);
-
-    },
+      // this.getDescription(responseData.data.results);
+      this.bookList = responseData.data.results; // remove this after bringing back Google api
+    }
   },
   async created() {
     this.getBookList();
-
   }
 };
 </script>
 
 <style scoped>
 li {
-    min-width: 600px;
-    margin: auto;
+  max-width: 600px;
+  margin: auto;
 }
-.swipe {
-  position: absolute;
+
+.card-container {
+  display: flex;
+  justify-content: center;
+
+  height: 100vh;
+
+}
+
+.rounded-borders {
+  border-radius: 12px;
+}
+
+.card {
+  width: 300px;
+  height: 400px;
+  color: white;
 }
 </style>
