@@ -1,10 +1,4 @@
 <template>
-  <!-- <div class="card-container">
-    <div
-      ><li v-if="bookList.length > 0" v-html="bookList[0].title"></li
-    ></div>
-  </div> -->
-
   <section class="card-container">
     <div
       class="flex justify-content-center align-items-center"
@@ -18,6 +12,7 @@
         :interact-y-threshold="200"
         class="rounded-borders shadow card"
         @draggedRight="swipedRight"
+        @draggedLeft="swipedLeft"
       >
         <div class="book-info">
           <h1 v-if="bookList.length > 0">{{ bookList[0].title }}</h1>
@@ -44,6 +39,16 @@ export default {
   },
   methods: {
     swipedRight() {
+      setTimeout(() => {
+        this.bookList.shift();
+        this.isVisible = false;
+        console.log(this.bookList)
+      }, 200);
+      setTimeout(() => {
+        this.isVisible = true;
+      }, 300);
+    },
+    swipedLeft() {
       setTimeout(() => {
         this.bookList.shift();
         this.isVisible = false;
