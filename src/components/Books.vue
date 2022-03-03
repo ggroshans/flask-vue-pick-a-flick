@@ -3,22 +3,25 @@
     <div
       ><li v-if="bookList.length > 0" v-html="bookList[0].title"></li
     ></div>
-
-
-
-
   </div> -->
 
   <section class="card-container">
-    <div class="fixed-center">
+    <div
+      class="flex justify-content-center align-items-center"
+      style="z-index: 3"
+    >
       <Vue2InteractDraggable
+        v-if="isVisible"
         :interact-out-of-sight-x-coordinate="1000"
         :interact-max-rotation="15"
         :interact-x-threshold="200"
         :interact-y-threshold="200"
-        class="rounded-borders shadow-10 card"
+        class="rounded-borders shadow card"
+        @draggedRight="swipedRight"
       >
-        <div class="card__main" v-if="bookList.length > 0" v-html="bookList[0].title"></div>
+        <div class="book-info">
+          <h1 v-if="bookList.length > 0">{{ bookList[0].title }}</h1>
+        </div>
       </Vue2InteractDraggable>
     </div>
   </section>
@@ -31,6 +34,7 @@ import { Vue2InteractDraggable } from "vue2-interact";
 export default {
   data() {
     return {
+      isVisible: true,
       bookList: []
     };
   },
@@ -39,8 +43,15 @@ export default {
     Vue2InteractDraggable
   },
   methods: {
-    swiped(book) {
-      this.bookList.shift();
+    swipedRight() {
+      setTimeout(() => {
+        this.bookList.shift();
+        this.isVisible = false;
+        console.log(this.bookList)
+      }, 200);
+      setTimeout(() => {
+        this.isVisible = true;
+      }, 300);
     },
     async getDescription(bookList) {
       for (let i = 0; i < bookList.length; i++) {
@@ -106,7 +117,6 @@ li {
   justify-content: center;
 
   height: 100vh;
-
 }
 
 .rounded-borders {
@@ -117,5 +127,14 @@ li {
   width: 300px;
   height: 400px;
   color: white;
+}
+
+.book-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  color: black;
 }
 </style>
