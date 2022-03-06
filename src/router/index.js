@@ -5,7 +5,7 @@ import Router from 'vue-router'
 import Login from '../components/auth/Login'
 import Register from '../components/auth/Register'
 import Splash from '../components/Splash'
-import Books from '../components/Books.vue'
+import Movies from '../components/Movies.vue'
 import Book from '../components/Book.vue'
 
 
@@ -29,9 +29,9 @@ export default new Router({
       component: Register
     },
     {
-      path: '/books',
-      name: 'Books',
-      component: Books
+      path: '/movies',
+      name: 'Movies',
+      component: Movies
     },
     {
       path: '/books/:bookTitle',
