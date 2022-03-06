@@ -30,7 +30,7 @@ export default new Router({
       component: Register
     },
     {
-      path: '/movies',
+      path: '/movies/:genre',
       name: 'Movies',
       component: Movies
     },

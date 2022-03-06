@@ -75,8 +75,11 @@ def register():
 def logout():
     logout_user()
 
-@app.route('/movies')
+@app.route('/movies', methods=["POST"])
 def books():
+    data = request.get_json()
+    genre_id = data['genre_id']
     key = os.getenv('MOVIE_KEY')
-    response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres=27&api_key={key}&language=en-US')
+    response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_id}&api_key={key}&language=en-US')
     return jsonify({"data": response.json()})
+

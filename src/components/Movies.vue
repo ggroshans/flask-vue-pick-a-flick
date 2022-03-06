@@ -15,7 +15,7 @@
         @draggedLeft="swipedLeft"
       >
         <div class="movie-info">
-          <p>{{movieList[0].overview}}</p>
+          <p>{{ movieList[0].overview }}</p>
         </div>
       </Vue2InteractDraggable>
     </div>
@@ -60,10 +60,11 @@ export default {
     },
     async getBookList() {
       const resp = await fetch("http://localhost:5000/movies", {
-        method: "GET",
+        method: "POST",
         headers: {
           "Content-Type": "application/json"
-        }
+        },
+        body: JSON.stringify({ genre_id: this.$route.params.genre })
       });
       let responseData = await resp.json(responseData);
       console.log("CATEGORY LIST WHOLE", responseData);
