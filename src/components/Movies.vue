@@ -1,25 +1,34 @@
 <template>
-  <section class="card-container">
-    <div
-      class="flex justify-content-center align-items-center"
-      style="z-index: 3"
-    >
-      <Vue2InteractDraggable
-        v-if="isVisible"
-        :interact-out-of-sight-x-coordinate="1000"
-        :interact-max-rotation="15"
-        :interact-x-threshold="200"
-        :interact-y-threshold="200"
-        class="rounded-borders shadow card"
-        @draggedRight="swipedRight"
-        @draggedLeft="swipedLeft"
+  <div>
+    <!-- <div v-if="!movieList[0]">
+      <b-button variant="primary">
+        <b-spinner small type="grow"></b-spinner>
+        Loading...
+      </b-button>
+    </div> -->
+
+    <section v-if="movieList[0]" class="card-container">
+      <div
+        class="flex justify-content-center align-items-center"
+        style="z-index: 3"
       >
-        <div class="movie-info">
-          <p>{{ movieList[0].overview }}</p>
-        </div>
-      </Vue2InteractDraggable>
-    </div>
-  </section>
+        <Vue2InteractDraggable
+          v-if="isVisible"
+          :interact-out-of-sight-x-coordinate="1000"
+          :interact-max-rotation="15"
+          :interact-x-threshold="200"
+          :interact-y-threshold="200"
+          class="rounded-borders shadow card"
+          @draggedRight="swipedRight"
+          @draggedLeft="swipedLeft"
+        >
+          <div class="movie-info">
+            <p>{{ movieList[0].overview }}</p>
+          </div>
+        </Vue2InteractDraggable>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -30,7 +39,8 @@ export default {
   data() {
     return {
       isVisible: true,
-      movieList: []
+      movieList: [],
+      isLoading: true,
     };
   },
   components: {
@@ -58,7 +68,11 @@ export default {
         this.isVisible = true;
       }, 300);
     },
-    async getBookList() {
+  },
+  created() {
+
+  },
+  async mounted() {
       const resp = await fetch("http://localhost:5000/movies", {
         method: "POST",
         headers: {
@@ -68,12 +82,8 @@ export default {
       });
       let responseData = await resp.json(responseData);
       console.log("CATEGORY LIST WHOLE", responseData);
+      this.isLoading = false;
       this.movieList = responseData.data.results;
-      // this.getSummary(responseData.data.results);
-    }
-  },
-  async created() {
-    this.getBookList();
   }
 };
 </script>
