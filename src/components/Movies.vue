@@ -23,10 +23,15 @@
     </section>
 
     <b-modal v-model="matchModal" title="It's a Match!!!" @hidden="onHidden">
+      <h1>{{movieList[0].title}}</h1>
       <img
         :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
         alt=""
+        class="img-fluid"
       />
+      <h2>Where to watch:</h2>
+      <a :href="'https://www.justwatch.com/us/search?q=' + movieList[0].title">Link</a>
+
     </b-modal>
   </div>
 </template>
