@@ -1,12 +1,5 @@
 <template>
   <div>
-    <!-- <div v-if="!movieList[0]">
-      <b-button variant="primary">
-        <b-spinner small type="grow"></b-spinner>
-        Loading...
-      </b-button>
-    </div> -->
-
     <section v-if="movieList[0]" class="card-container">
       <div
         class="flex justify-content-center align-items-center"
@@ -28,6 +21,13 @@
         </Vue2InteractDraggable>
       </div>
     </section>
+
+    <b-modal v-model="matchModal" title="It's a Match!!!" @hidden="onHidden">
+      <img
+        :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
+        alt=""
+      />
+    </b-modal>
   </div>
 </template>
 
@@ -40,7 +40,7 @@ export default {
     return {
       isVisible: true,
       movieList: [],
-      isLoading: true,
+      matchModal: false
     };
   },
   components: {
@@ -50,13 +50,10 @@ export default {
   methods: {
     swipedRight() {
       setTimeout(() => {
-        this.movieList.shift();
+        this.matchModal = true;
         this.isVisible = false;
-        console.log(this.movieList);
+        console.log(bvModalEvent)
       }, 200);
-      setTimeout(() => {
-        this.isVisible = true;
-      }, 300);
     },
     swipedLeft() {
       setTimeout(() => {
@@ -68,22 +65,29 @@ export default {
         this.isVisible = true;
       }, 300);
     },
-  },
-  created() {
-
+    onHidden() {
+              this.movieList.shift();
+        this.isVisible = true;
+    }
   },
   async mounted() {
-      const resp = await fetch("http://localhost:5000/movies", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ genre_id: this.$route.params.genre })
-      });
-      let responseData = await resp.json(responseData);
-      console.log("CATEGORY LIST WHOLE", responseData);
-      this.isLoading = false;
-      this.movieList = responseData.data.results;
+    let loading = this.$loading.show({
+      loader: "dots",
+      color: "#653780",
+      backgroundColor: "#fff",
+      opacity: 0.5
+    });
+    const resp = await fetch("http://localhost:5000/movies", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ genre_id: this.$route.params.genre })
+    });
+    let responseData = await resp.json(responseData);
+    console.log("CATEGORY LIST WHOLE", responseData);
+    loading.hide();
+    this.movieList = responseData.data.results;
   }
 };
 </script>
