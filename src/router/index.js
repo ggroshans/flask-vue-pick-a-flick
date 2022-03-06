@@ -6,6 +6,7 @@ import Login from '../components/auth/Login'
 import Register from '../components/auth/Register'
 import Splash from '../components/Splash'
 import Movies from '../components/Movies.vue'
+import Genres from '../components/Genres.vue'
 import Book from '../components/Book.vue'
 
 
@@ -33,10 +34,16 @@ export default new Router({
       name: 'Movies',
       component: Movies
     },
+        {
+      path: '/genres',
+      name: 'Genres',
+      component: Genres
+    },
     {
       path: '/books/:bookTitle',
       name: 'Book',
       component: Book
-    }
+    },
+
   ]
 })

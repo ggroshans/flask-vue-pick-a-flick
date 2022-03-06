@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <h1 class="">Book Date</h1>
+      <h1 class="">Movie Date</h1>
     </div>
     <div class="row justify-content-center">
       <router-link to="/login">
@@ -14,7 +14,7 @@
     </router-link>
     </div>
     <div class="row mt-3 justify-content-center">
-    <router-link to="/categories">
+    <router-link to="/genres">
       <button class="btn btn-primary">Continue as Guest</button>
     </router-link>
     </div>

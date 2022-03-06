@@ -14,10 +14,8 @@
         @draggedRight="swipedRight"
         @draggedLeft="swipedLeft"
       >
-        <div class="book-info">
-          <!-- <img :src="bookList[0].bookImage" alt=""> -->
-          <!-- <h1 v-if="bookList.length > 0">{{ bookList[0].title }}</h1> -->
-          <p>{{movieList[0].title}}</p>
+        <div class="movie-info">
+          <p>{{movieList[0].overview}}</p>
         </div>
       </Vue2InteractDraggable>
     </div>
@@ -60,63 +58,6 @@ export default {
         this.isVisible = true;
       }, 300);
     },
-    // async getDescription(bookList) {
-    //   for (let i = 0; i < bookList.length; i++) {
-    //     //if the book has an isbn available
-    //     if (bookList[i].isbns[0]) {
-    //       const resp = await fetch("http://localhost:5000/description", {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //           isbn: bookList[i].isbns[0].isbn13
-    //         })
-    //       });
-    //       let responseData = await resp.json();
-    //       console.log("GOOGLE BOOK", responseData);
-
-    //       //if the book has the book description available
-
-    //       console.log("fired");
-    //       bookList[i]["snippet"] =
-    //         responseData.data.items[0].searchInfo.textSnippet;
-    //       this.bookList.push(bookList[i]);
-    //       console.log("BOOKLIST", this.bookList);
-    //     }
-    //   }
-    // },
-    //   }
-    // async getSummary(bookList) {
-    //   for (let i = 0; i < bookList.length; i++) {
-    //     //if the book has an isbn available
-    //     console.log(bookList[i]);
-    //     if (bookList[i].isbns[0]) {
-    //       const resp = await fetch("http://localhost:5000/summary", {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //           isbn: bookList[i].isbns[0].isbn13
-    //         })
-    //       });
-    //       let responseData = await resp.json();
-    //       console.log("GOOGLE BOOK", responseData);
-    //       //if the book has the book results available
-    //       if (responseData.data.results) {
-    //         console.log("fired");
-    //         bookList[i]["summary"] = responseData.data.results[0].summary;
-    //         this.bookList.push(bookList[i]);
-    //         console.log("BOOKLIST", this.bookList);
-    //       } else if (responseData.data.fault) {
-    //         setTimeout(() => {}, 15000);
-    //         i--;
-    //         continue;
-    //       }
-    //     }
-    //   }
-    // },
     async getBookList() {
       const resp = await fetch("http://localhost:5000/movies", {
         method: "GET",
@@ -159,7 +100,7 @@ li {
   color: white;
 }
 
-.book-info {
+.movie-info {
   display: flex;
   justify-content: center;
   align-items: center;
