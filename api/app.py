@@ -75,10 +75,10 @@ def register():
 def logout():
     logout_user()
 
-@app.route('/books')
+@app.route('/movies')
 def books():
-    key = os.getenv('NYT_KEY')
-    response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=700&api-key={key}')
+    key = os.getenv('MOVIE_KEY')
+    response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres=27&api_key={key}&language=en-US')
     return jsonify({"data": response.json()})
 
 # @app.route('/books')
@@ -89,7 +89,7 @@ def books():
 #     for book in books:
 #         if book['isbns']:
 #             isbn = book['isbns'][0]['isbn13']
-#             response = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc')
+#             response = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key={key}')
             
 #             resp_json = response.json()
 #             print(resp_json['items'])
@@ -109,11 +109,22 @@ def category():
     response = requests.get(f'https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json?offset=9420&api-key={key}')
     return jsonify({"data": response.json()})
 
-@app.route('/description', methods=["GET", "POST"])
+# @app.route('/description', methods=["GET", "POST"])
+# def description():
+#     key = os.getenv('GOOG_KEY')
+#     data = request.get_json()
+#     isbn = data['isbn']
+#     print(data, "DATA")
+#     response = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key={key}')
+#     return jsonify({"data": response.json()})
+
+
+@app.route('/summary', methods=["GET", "POST"])
 def description():
-    key = os.getenv('GOOG_KEY')
+    key = os.getenv('NYT_KEY')
     data = request.get_json()
     isbn = data['isbn']
     print(data, "DATA")
-    response = requests.get(f'https://www.googleapis.com/books/v1/volumes?q=isbn:{isbn}&key=AIzaSyDhnFHiBiax8maT3xgRGpe14SUPQG8iaMc')
+    # response = requests.get(f'https://api.nytimes.com/svc/books/v3/reviews.json? isbn={isbn}&api-key={key}')
+    response = requests.get(f'https://api.nytimes.com/svc/books/v3/reviews.json?api-key={key}')
     return jsonify({"data": response.json()})
