@@ -7,6 +7,16 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        currentMovie: {}
+        currentMovieObj: {}
+    },
+    getters: {
+        getCurrentMovie (state) {
+            return state.currentMovieObj;
+        }
+    },
+    mutations: {
+        setCurrentMovieObj (state, obj) {
+            state.currentMovieObj = obj;
+        }
     }
 })

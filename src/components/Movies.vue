@@ -34,27 +34,25 @@
       footer-text-variant="light"
       class="p-0"
     >
-
-        <div
-          slot="modal-title"
-          style="font-family: 'Lobster';"
-          class="text-center mx-auto w-100"
-        >
-          It's a Match!
-        </div>
-
+      <div
+        slot="modal-title"
+        style="font-family: 'Lobster';"
+        class="text-center mx-auto w-100"
+      >
+        It's a Match!
+      </div>
 
       <div class="d-flex flex-column justify-content-center align-items-center">
-          <img
-            :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
-            alt=""
-            class="img-fluid"
-            style="width:100%; max-height: 600px"
-          />
+        <img
+          :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
+          alt=""
+          class="img-fluid"
+          style="width:100%; max-height: 600px"
+        />
       </div>
       <div slot="modal-footer">
-        <b-button @click="matchModal=false" variant="danger">Close</b-button>
-        <b-button variant="success">Go to Movie Page</b-button>
+        <b-button @click="matchModal = false" variant="danger">Close</b-button>
+        <b-button @click="goToMoviePage" variant="success">Go to Movie Page</b-button>
       </div>
     </b-modal>
   </div>
@@ -62,7 +60,6 @@
 
 <script>
 /* eslint-disable */
-import Book from "./Book.vue";
 import { Vue2InteractDraggable } from "vue2-interact";
 export default {
   data() {
@@ -73,7 +70,6 @@ export default {
     };
   },
   components: {
-    Book,
     Vue2InteractDraggable
   },
   methods: {
@@ -97,6 +93,13 @@ export default {
       this.movieList.shift();
       this.isVisible = true;
       this.matchModal = false;
+    },
+    goToMoviePage() {
+      this.$store.commit("setCurrentMovieObj", this.movieList[0]);
+      this.$router.push({
+        name: "Movie",
+        params: { id: this.movieList[0].id }
+      });
     }
   },
   async mounted() {
@@ -153,7 +156,7 @@ li {
   padding: 1rem;
   color: black;
 }
->>> .modal-dialog{
+>>> .modal-dialog {
   max-width: 400px;
 }
 >>> .modal-title {

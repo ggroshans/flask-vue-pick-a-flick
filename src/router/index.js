@@ -7,7 +7,7 @@ import Register from '../components/auth/Register'
 import Splash from '../components/Splash'
 import Movies from '../components/Movies.vue'
 import Genres from '../components/Genres.vue'
-import Book from '../components/Book.vue'
+import Movie from '../components/Movie.vue'
 
 
 Vue.use(Router)
@@ -40,9 +40,9 @@ export default new Router({
       component: Genres
     },
     {
-      path: '/books/:bookTitle',
-      name: 'Book',
-      component: Book
+      path: '/movie/:id',
+      name: 'Movie',
+      component: Movie
     },
 
   ]
