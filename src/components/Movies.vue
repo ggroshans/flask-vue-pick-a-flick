@@ -52,6 +52,10 @@
             style="width:100%; max-height: 600px"
           />
       </div>
+      <div slot="modal-footer">
+        <b-button @click="matchModal=false" variant="danger">Close</b-button>
+        <b-button variant="success">Go to Movie Page</b-button>
+      </div>
     </b-modal>
   </div>
 </template>
