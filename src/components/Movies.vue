@@ -22,16 +22,33 @@
       </div>
     </section>
 
-    <b-modal v-model="matchModal" title="It's a Match!!!" @hidden="onHidden">
-      <h1>{{movieList[0].title}}</h1>
-      <img
-        :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
-        alt=""
-        class="img-fluid"
-      />
-      <h2>Where to watch:</h2>
-      <a :href="'https://www.justwatch.com/us/search?q=' + movieList[0].title">Link</a>
+    <b-modal
+      v-model="matchModal"
+      @hidden="onHidden"
+      size="md"
+      scrollable
+    >
+      <!-- <h1 class="text-center" style="font-family:'limelight'; font-size: 2rem;">
+        {{ movieList[0].title }}
+      </h1> -->
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="modal-top-left">
+          <img
+            :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
+            alt=""
+            class="img-fluid"
+            style="width:100%;"
+          />
+        </div>
+        <div class="modal-top-right mt-5 px-4">
+          <p>{{ movieList[0].overview }}</p>
+        </div>
+      </div>
 
+      <h2>Where to watch:</h2>
+      <a target="_blank" :href="'https://www.justwatch.com/us/search?q=' + movieList[0].title"
+        >Link</a
+      >
     </b-modal>
   </div>
 </template>
@@ -57,7 +74,6 @@ export default {
       setTimeout(() => {
         this.matchModal = true;
         this.isVisible = false;
-        console.log(bvModalEvent)
       }, 200);
     },
     swipedLeft() {
@@ -71,8 +87,9 @@ export default {
       }, 300);
     },
     onHidden() {
-              this.movieList.shift();
-        this.isVisible = true;
+      this.movieList.shift();
+      this.isVisible = true;
+      this.matchModal = false;
     }
   },
   async mounted() {
