@@ -14,7 +14,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueLoading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 
-import { store } from './store/store'
+import {store} from './store/store'
 
 Vue.config.productionTip = false
 
@@ -24,8 +24,8 @@ Vue.use(VueLoading)
 
 new Vue({
   el: '#app',
-  router,
   store,
+  router,
   components: { App },
   template: '<App/>'
 })
