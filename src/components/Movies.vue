@@ -26,29 +26,32 @@
       v-model="matchModal"
       @hidden="onHidden"
       size="md"
-      scrollable
+      header-bg-variant="dark"
+      header-text-variant="light"
+      body-bg-variant="light"
+      body-text-variant="dark"
+      footer-bg-variant="dark"
+      footer-text-variant="light"
+      class="p-0"
     >
-      <!-- <h1 class="text-center" style="font-family:'limelight'; font-size: 2rem;">
-        {{ movieList[0].title }}
-      </h1> -->
+
+        <div
+          slot="modal-title"
+          style="font-family: 'Lobster';"
+          class="text-center mx-auto w-100"
+        >
+          It's a Match!
+        </div>
+
+
       <div class="d-flex flex-column justify-content-center align-items-center">
-        <div class="modal-top-left">
           <img
             :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
             alt=""
             class="img-fluid"
-            style="width:100%;"
+            style="width:100%; max-height: 600px"
           />
-        </div>
-        <div class="modal-top-right mt-5 px-4">
-          <p>{{ movieList[0].overview }}</p>
-        </div>
       </div>
-
-      <h2>Where to watch:</h2>
-      <a target="_blank" :href="'https://www.justwatch.com/us/search?q=' + movieList[0].title"
-        >Link</a
-      >
     </b-modal>
   </div>
 </template>
@@ -145,5 +148,16 @@ li {
   width: 100%;
   padding: 1rem;
   color: black;
+}
+>>> .modal-dialog{
+  max-width: 400px;
+}
+>>> .modal-title {
+  width: 100%;
+  font-size: 2.5rem;
+  letter-spacing: 0.1rem;
+}
+>>> .modal-body {
+  padding: 0px !important;
 }
 </style>
