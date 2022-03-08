@@ -22,7 +22,8 @@
     "vue": "^2.5.2",
     "vue-loading-overlay": "^3.4.2",
     "vue-router": "^3.0.1",
-    "vue2-interact": "0.0.3"
+    "vue2-interact": "0.0.3",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
