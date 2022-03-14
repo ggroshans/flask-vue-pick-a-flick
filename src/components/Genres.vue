@@ -94,7 +94,13 @@ export default {
   },
   created() {
     let token = this.$store.getters.getToken;
+    let auth = this.$store.getters.getAuthStatus;
     console.log("TEST --", token);
+    console.log("AUTH STATUS", auth)
+
+    if (!auth) {
+      this.$router.push("/");
+    }
   }
 };
 </script>

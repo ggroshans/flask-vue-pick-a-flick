@@ -13,11 +13,6 @@
       <button class="btn btn-primary">Register</button>
     </router-link>
     </div>
-    <div class="row mt-3 justify-content-center">
-    <router-link to="/genres">
-      <button class="btn btn-primary">Continue as Guest</button>
-    </router-link>
-    </div>
   </div>
 </template>
 <script>
