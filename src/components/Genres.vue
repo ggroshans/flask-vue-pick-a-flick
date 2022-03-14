@@ -91,6 +91,10 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    let token = this.$store.getters.getToken;
+    console.log("TEST --", token);
   }
 };
 </script>

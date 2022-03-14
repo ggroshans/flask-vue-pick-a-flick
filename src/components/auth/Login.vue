@@ -94,6 +94,7 @@ export default {
           this.passwordError = responseData["error"]["password"];
         }
       } else {
+        this.$store.commit("setToken", responseData.token)
         router.push('genres')
       }
     }
