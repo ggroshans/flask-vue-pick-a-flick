@@ -1,9 +1,6 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <h1 class="">Movie Date</h1>
-    </div>
-    <div class="row justify-content-center">
       <router-link to="/login">
       <button class="btn btn-primary">Login</button>
       </router-link>
