@@ -15,9 +15,6 @@ export const store = new Vuex.Store({
         getCurrentMovie (state) {
             return state.currentMovieObj;
         },
-        getToken (state) {
-            return state.token;
-        },
         getAuthStatus (state) {
             return state.authStatus;
         }
@@ -25,9 +22,6 @@ export const store = new Vuex.Store({
     mutations: {
         setCurrentMovieObj (state, obj) {
             state.currentMovieObj = obj;
-        },
-        setToken(state, token) {
-            state.token = token;
         },
         setAuthStatus(state, status) {
             state.authStatus = status;
