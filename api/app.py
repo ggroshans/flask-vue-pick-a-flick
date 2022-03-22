@@ -1,28 +1,44 @@
-from enum import unique
+
 import os
+import bcrypt
+import requests
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-import bcrypt
-import requests
+
 from flask_jwt_extended import create_access_token
+from flask_jwt_extended import set_access_cookies
 from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import get_jwt
+from flask_jwt_extended import unset_jwt_cookies
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+
+from datetime import datetime
 from datetime import timedelta
+from datetime import timezone
 
 app = Flask(__name__)
 CORS(app)
+               
                            
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 SECRET_KEY = os.getenv("SECRET_KEY")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=5)
-app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config['SECRET_KEY'] = SECRET_KEY
-db = SQLAlchemy(app)
 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+
+app.config["JWT_SECRET_KEY"] = "super-secret" 
+app.config["JWT_COOKIE_SECURE"] = False
+app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=40)
+app.config['JWT_CSRF_IN_COOKIES'] = False
+
+
+db = SQLAlchemy(app)
 jwt = JWTManager(app)
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -32,6 +48,21 @@ class User(db.Model):
     def __init__ (self, username, password):
         self.username = username
         self.password = password
+
+@app.after_request
+def check_JWT_expiration(response):
+    print('after_request fired')
+    try:
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            set_access_cookies(response, access_token)
+            print("token refreshed")
+        return response
+    except (RuntimeError, KeyError):
+            return response
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -43,8 +74,10 @@ def login():
     
     if user:
         if bcrypt.checkpw(bytes(password, 'utf-8'), user.password):
-            access_token = create_access_token(identity=username);
-            return jsonify({"success": "user access granted", "token": access_token})
+            access_token = create_access_token(identity=username)
+            response = jsonify({"success": "user access granted"})
+            set_access_cookies(response, access_token)
+            return response
         else:
             return jsonify({"error": {"password" :"Passwords do not match"}})
     else:
@@ -69,16 +102,11 @@ def register():
         return jsonify({"success": "User registered"})
 
 
-@app.route('/logout', methods=["GET", "POST"])
+@app.route("/logout", methods=["POST"])
 def logout():
-    pass
-
-@app.route("/refresh", methods=["POST"])
-@jwt_required(refresh=True)
-def refresh():
-    identity = get_jwt_identity()
-    access_token = create_access_token(identity=identity)
-    return jsonify(access_token=access_token)
+    response = jsonify({"msg": "logout successful"})
+    unset_jwt_cookies(response)
+    return response
 
 @app.route('/movies', methods=["POST"])
 @jwt_required()

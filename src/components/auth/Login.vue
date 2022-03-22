@@ -74,7 +74,7 @@ export default {
       const resp = await fetch("http://localhost:5000/login", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           username: this.username,
@@ -94,7 +94,10 @@ export default {
           this.passwordError = responseData["error"]["password"];
         }
       } else {
-        this.$store.commit("setToken", responseData.token);
+        console.log('response', responseData)
+        // sessionStorage.setItem("access_token", responseData.access_token)
+        // sessionStorage.setItem("refresh_token", responseData.refresh_token)
+        // console.log("STORAGE", sessionStorage)
         this.$store.commit("setAuthStatus", true);
         router.push('genres')
       }

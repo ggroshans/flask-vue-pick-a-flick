@@ -112,10 +112,11 @@ export default {
     const resp = await fetch("http://localhost:5000/movies", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ genre_id: this.$route.params.genre })
     });
+
     let responseData = await resp.json(responseData);
     console.log("CATEGORY LIST WHOLE", responseData);
     loading.hide();

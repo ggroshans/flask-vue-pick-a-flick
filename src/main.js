@@ -16,11 +16,14 @@ import 'vue-loading-overlay/dist/vue-loading.css'
 
 import {store} from './store/store'
 
+import VueCookies from 'vue-cookies'
+
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueLoading)
+Vue.use(VueCookies)
 
 new Vue({
   el: '#app',
