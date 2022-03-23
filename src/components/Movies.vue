@@ -111,8 +111,10 @@ export default {
     });
     const resp = await fetch("http://localhost:5000/movies", {
       method: "POST",
+      credentials: 'include', //allows fetch to send cookie
       headers: {
         "Content-Type": "application/json",
+        "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
       },
       body: JSON.stringify({ genre_id: this.$route.params.genre })
     });

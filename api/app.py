@@ -20,7 +20,7 @@ from datetime import timedelta
 from datetime import timezone
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True) #supports_credentials allows cookies or authenticated requests to be made cross origins
                
                            
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -33,7 +33,7 @@ app.config["JWT_SECRET_KEY"] = "super-secret"
 app.config["JWT_COOKIE_SECURE"] = False
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(minutes=40)
-app.config['JWT_CSRF_IN_COOKIES'] = False
+app.config['JWT_CSRF_IN_COOKIES'] = True
 
 
 db = SQLAlchemy(app)

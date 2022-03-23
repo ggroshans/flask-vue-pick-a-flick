@@ -73,6 +73,7 @@ export default {
       console.log("fired");
       const resp = await fetch("http://localhost:5000/login", {
         method: "POST",
+        credentials: 'include', //allows fetch to send cookie
         headers: {
           "Content-Type": "application/json",
         },
