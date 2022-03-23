@@ -120,6 +120,11 @@ export default {
     });
 
     let responseData = await resp.json(responseData);
+    if (responseData.msg == "Token has expired") {
+      $cookies.remove("access_token_cookie");
+      $cookies.remove("csrf_access_token");
+      this.$router.push("/login")
+    }
     console.log("CATEGORY LIST WHOLE", responseData);
     loading.hide();
     this.movieList = responseData.data.results;
