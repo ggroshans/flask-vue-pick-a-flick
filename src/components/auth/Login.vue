@@ -100,7 +100,7 @@ export default {
         // sessionStorage.setItem("refresh_token", responseData.refresh_token)
         // console.log("STORAGE", sessionStorage)
         this.$store.commit("setAuthStatus", true);
-        router.push('genres')
+        this.$router.push('genres')
       }
     }
   }

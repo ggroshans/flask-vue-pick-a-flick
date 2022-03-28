@@ -128,7 +128,7 @@ export default {
     console.log("CATEGORY LIST WHOLE", responseData);
     loading.hide();
     this.movieList = responseData.data.results;
-  }
+  },
 };
 </script>
 

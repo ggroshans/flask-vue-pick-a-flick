@@ -2,8 +2,13 @@
 
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersistence from 'vuex-persist'
 
 Vue.use(Vuex)
+
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage
+})
 
 export const store = new Vuex.Store({
     state: {
@@ -26,5 +31,6 @@ export const store = new Vuex.Store({
         setAuthStatus(state, status) {
             state.authStatus = status;
         }
-    }
+    },
+    plugins: [vuexLocal.plugin]
 })
