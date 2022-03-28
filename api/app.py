@@ -6,6 +6,7 @@ import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import set_access_cookies
@@ -21,7 +22,7 @@ from datetime import timezone
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True) #supports_credentials allows cookies or authenticated requests to be made cross origins
-               
+
                            
 SECRET_KEY = os.getenv("SECRET_KEY")
 app.config['SECRET_KEY'] = SECRET_KEY
@@ -37,6 +38,7 @@ app.config['JWT_CSRF_IN_COOKIES'] = True
 
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 jwt = JWTManager(app)
 
 
