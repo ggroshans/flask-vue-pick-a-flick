@@ -11,7 +11,8 @@ Flask-Login = "*"
 Flask-Bcrypt = "*"
 requests = "*"
 python-dotenv = "*"
-flask-jwt-extended = "*"
+Flask-JWT-Extended = "*"
+Flask-Migrate = "*"
 
 [dev-packages]
 
