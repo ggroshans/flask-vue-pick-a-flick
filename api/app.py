@@ -54,7 +54,7 @@ class User(db.Model):
 
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    movie = db.Column(db.String(300), nullable=False)
+    movie = db.Column(db.PickleType, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __init__(self, movie, user_id):
