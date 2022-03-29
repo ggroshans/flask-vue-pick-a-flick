@@ -52,7 +52,9 @@
       </div>
       <div slot="modal-footer">
         <b-button @click="matchModal = false" variant="danger">Close</b-button>
-        <b-button @click="goToMoviePage" variant="success">Go to Movie Page</b-button>
+        <b-button @click="goToMoviePage" variant="success"
+          >Go to Movie Page</b-button
+        >
       </div>
     </b-modal>
   </div>
@@ -74,6 +76,7 @@ export default {
   },
   methods: {
     swipedRight() {
+      this.saveMovie();
       setTimeout(() => {
         this.matchModal = true;
         this.isVisible = false;
@@ -100,6 +103,18 @@ export default {
         name: "Movie",
         params: { id: this.movieList[0].id }
       });
+    },
+    saveMovie() {
+      const resp = fetch("http://localhost:5000/save_movie", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
+        },
+        body: JSON.stringify(this.movieList[0])
+      });
+
     }
   },
   async mounted() {
@@ -111,7 +126,7 @@ export default {
     });
     const resp = await fetch("http://localhost:5000/movies", {
       method: "POST",
-      credentials: 'include', //allows fetch to send cookie
+      credentials: "include", //allows fetch to send cookie
       headers: {
         "Content-Type": "application/json",
         "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
@@ -123,12 +138,12 @@ export default {
     if (responseData.msg == "Token has expired") {
       $cookies.remove("access_token_cookie");
       $cookies.remove("csrf_access_token");
-      this.$router.push("/login")
+      this.$router.push("/login");
     }
     console.log("CATEGORY LIST WHOLE", responseData);
     loading.hide();
     this.movieList = responseData.data.results;
-  },
+  }
 };
 </script>
 

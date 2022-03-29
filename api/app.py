@@ -46,10 +46,17 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
+    movies = db.relationship('Movie', backref='user', lazy=True)
 
     def __init__ (self, username, password):
         self.username = username
         self.password = password
+
+class Movie(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    movie = db.Column(db.String(300), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
 
 @app.after_request
 def check_JWT_expiration(response):
@@ -103,6 +110,11 @@ def register():
         db.session.commit()
         return jsonify({"success": "User registered"})
 
+@app.route("/save_movie", methods=["POST"])
+def save_movie():
+    data = request.get_json()
+    print(data, type(data))
+    return "test"
 
 @app.route("/logout", methods=["POST"])
 def logout():
