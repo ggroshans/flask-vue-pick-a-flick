@@ -8,6 +8,7 @@ import Splash from '../components/Splash'
 import Movies from '../components/Movies.vue'
 import Genres from '../components/Genres.vue'
 import Movie from '../components/Movie.vue'
+import Profile from '../components/Profile.vue'
 
 
 Vue.use(Router)
@@ -44,6 +45,11 @@ export default new Router({
       name: 'Movie',
       component: Movie
     },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile,
+    }
 
   ]
 })

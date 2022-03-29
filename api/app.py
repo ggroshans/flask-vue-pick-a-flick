@@ -114,17 +114,6 @@ def register():
         db.session.commit()
         return jsonify({"success": "User registered"})
 
-@app.route("/save_movie", methods=["POST"])
-@jwt_required()
-def save_movie():
-    movie_data = request.get_json()
-    username = get_jwt_identity()
-    user_class = User.query.filter_by(username=username).first()
-    print(movie_data, user_class.id)
-    movie = Movie(movie_data, user_class.id)
-    db.session.add(movie)
-    db.session.commit()
-    return "test"
 
 @app.route("/logout", methods=["POST"])
 def logout():
@@ -141,3 +130,29 @@ def movies():
     response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_id}&api_key={key}&language=en-US')
     return jsonify({"data": response.json()})
 
+@app.route("/save_movie", methods=["POST"])
+@jwt_required()
+def save_movie():
+    movie_data = request.get_json()
+    username = get_jwt_identity()
+    user_class = User.query.filter_by(username=username).first()
+    print(movie_data, user_class.id)
+    movie = Movie(movie_data, user_class.id)
+    db.session.add(movie)
+    db.session.commit()
+    return jsonify({"msg": "movie saved"})
+
+@app.route("/get_movies")
+@jwt_required()
+def get_movies():
+    username = get_jwt_identity()
+    user_class = User.query.filter_by(username=username).first()
+
+    movie_class = Movie.query.filter_by(user_id=user_class.id).all()
+    print(type(movie_class))
+
+    movies = []
+    for movie in movie_class:
+        print(movie.movie)
+        movies.append(movie.movie)
+    return jsonify(movies)
