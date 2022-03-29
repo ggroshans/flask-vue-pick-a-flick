@@ -57,6 +57,10 @@ class Movie(db.Model):
     movie = db.Column(db.String(300), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+    def __init__(self, movie, user_id):
+        self.movie = movie
+        self.user_id = user_id
+
 
 @app.after_request
 def check_JWT_expiration(response):
@@ -111,9 +115,15 @@ def register():
         return jsonify({"success": "User registered"})
 
 @app.route("/save_movie", methods=["POST"])
+@jwt_required()
 def save_movie():
-    data = request.get_json()
-    print(data, type(data))
+    movie_data = request.get_json()
+    username = get_jwt_identity()
+    user_class = User.query.filter_by(username=username).first()
+    print(movie_data, user_class.id)
+    movie = Movie(movie_data, user_class.id)
+    db.session.add(movie)
+    db.session.commit()
     return "test"
 
 @app.route("/logout", methods=["POST"])
