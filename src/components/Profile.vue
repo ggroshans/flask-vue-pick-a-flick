@@ -1,11 +1,11 @@
 <template>
     <div>
         <h3>Profile Page</h3>
-        <ul>
-            <li v-for="movie in movies">{{movie}}
-                <hr>
-            </li>
-        </ul>
+        <div class="movie-grid-container">
+            <div class="movie-grid-item" v-for="movie in movies">
+                <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -32,5 +32,23 @@
 </script>
 
 <style scoped>
+.movie-grid-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    gap: 1rem;
+}
+.movie-grid-item {
+    width: minmax(190px, 1fr);
+    overflow:hidden;
+}
+img {
+    width: 190px;
+    border-radius: 0.5rem;
+}
 
 </style>
