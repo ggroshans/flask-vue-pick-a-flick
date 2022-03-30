@@ -135,9 +135,8 @@ def movies():
 def save_movie():
     movie_data = request.get_json()
     username = get_jwt_identity()
-    user_class = User.query.filter_by(username=username).first()
-    print(movie_data, user_class.id)
-    movie = Movie(movie_data, user_class.id)
+    user_obj = User.query.filter_by(username=username).first()
+    movie = Movie(movie_data, user_obj.id)
     db.session.add(movie)
     db.session.commit()
     return jsonify({"msg": "movie saved"})
@@ -146,13 +145,10 @@ def save_movie():
 @jwt_required()
 def get_movies():
     username = get_jwt_identity()
-    user_class = User.query.filter_by(username=username).first()
-
-    movie_class = Movie.query.filter_by(user_id=user_class.id).all()
-    print(type(movie_class))
+    user_obj = User.query.filter_by(username=username).first()
 
     movies = []
-    for movie in movie_class:
+    for movie in user_obj.movies:
         print(movie.movie)
         movies.append(movie.movie)
     return jsonify(movies)
