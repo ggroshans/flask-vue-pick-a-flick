@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-5">
     <h1>Register</h1>
     <form>
       <div class="input-group form-group mb-0">
@@ -97,7 +97,7 @@ export default {
 h1 {
   font-family: "Lobster Two";
   font-weight: 600;
-  font-size: 3rem;
+  font-size: 2rem;
 }
 .error-message {
   color: tomato;

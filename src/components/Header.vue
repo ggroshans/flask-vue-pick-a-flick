@@ -42,5 +42,6 @@ export default {
 <style scoped>
 h1 {
   font-family: "Lobster Two", cursive;
+  font-size: 4.5rem;
 }
 </style>
