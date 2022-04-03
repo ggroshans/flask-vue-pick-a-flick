@@ -2,8 +2,9 @@
     <div>
         <h3>Profile Page</h3>
         <div class="movie-grid-container">
-            <div class="movie-grid-item" v-for="movie in movies">
+            <div class="movie-grid-item" v-for="movie in movies" :id="movie.id" @click="">
                 <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
+                <b-icon icon="x-square-fill" class="close-icon"></b-icon> 
             </div>
         </div>
     </div>
@@ -43,12 +44,24 @@
     gap: 1rem;
 }
 .movie-grid-item {
+    position: relative;
     width: minmax(190px, 1fr);
-    overflow:hidden;
 }
 img {
     width: 190px;
     border-radius: 0.5rem;
+    z-index: 1;
+}
+.close-icon {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    font-size: 1.25rem;
+    color: lightgray;
+}
+
+.close-icon:hover {
+    color: tomato;
 }
 
 </style>
