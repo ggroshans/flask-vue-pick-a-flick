@@ -2,7 +2,7 @@
   <div>
     <h1>Movie Date</h1>
     <button @click="logout" v-if="isLoggedIn">Logout</button>
-    <router-link to="/profile" v-if="isLoggedIn"><button>Profile</button> </router-link> 
+    <router-link to="/user/movies" v-if="isLoggedIn"><button>Profile</button> </router-link> 
   </div>
 </template>
 
