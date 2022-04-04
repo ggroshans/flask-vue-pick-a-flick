@@ -4,7 +4,7 @@
     <b-icon
       icon="x-square-fill"
       class="close-icon"
-      @click="$root.$emit('bv::show::modal', 'modal-1')"
+      @click="deleteMovie(movie.id)"
     ></b-icon>
   </div>
 
@@ -17,7 +17,11 @@ export default {
     return {};
   },
   props: {
-    movie: Object
+    movie: Object,
+    deleteMovie: Function,
+  },
+  methods: {
+
   }
 };
 </script>

@@ -7,9 +7,10 @@
         v-for="movie in movies"
         :id="movie.id"
         :movie="movie"
+        :key="movie.id"
+        :deleteMovie="deleteMovie"
       >
       
-
       </user-movie>
     </div>
     <b-modal id="modal-1" title="BootstrapVue" header-bg-variant="danger"
@@ -31,6 +32,19 @@ export default {
   components: {
     UserMovie,
   },
+  methods: {
+    deleteMovie(selectedMovieId) {
+    this.$root.$emit('bv::show::modal', 'modal-1')
+    console.log(movieId)
+
+    console.log(this.movies)
+    let index = this.movies.findIndex(movie => {
+      movie.id == selectedMovieId
+    })
+
+    console.log(index);
+    },
+  },
   async created() {
     let resp = await fetch("http://localhost:5000/get_movies", {
       method: "GET",
@@ -41,6 +55,12 @@ export default {
       }
     });
     let responseData = await resp.json();
+    if (responseData.msg == "Token has expired") {
+      $cookies.remove("access_token_cookie");
+      $cookies.remove("csrf_access_token");
+      this.$store.commit("setAuthStatus", false);
+      this.$router.push("/login");
+    }
     this.movies = responseData;
   }
 };
