@@ -138,6 +138,7 @@ export default {
     if (responseData.msg == "Token has expired") {
       $cookies.remove("access_token_cookie");
       $cookies.remove("csrf_access_token");
+      this.$store.commit("setAuthStatus", false);
       this.$router.push("/login");
     }
     console.log("CATEGORY LIST WHOLE", responseData);
