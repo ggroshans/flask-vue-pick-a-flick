@@ -8,15 +8,19 @@
         :id="movie.id"
         :movie="movie"
         :key="movie.id"
-        :deleteMovie="deleteMovie"
+        @deletedMovieObj= "movieObj=$event"
       >
       
       </user-movie>
     </div>
-    <b-modal id="modal-1" title="BootstrapVue" header-bg-variant="danger"
-    header-text-variant="light">
-      <div class="delete-modal-title" slot="modal-title">Delete Confirmation</div>
-      <p class="my-4">Are you sure you want to delete</p>
+    <b-modal id="delete-modal" title="BootstrapVue" header-bg-variant="danger"
+    header-text-variant="light" size="sm">
+      <div class="delete-modal-title" slot="modal-title"><strong>Delete Confirmation</strong> </div>
+      <p v-if="movieObj" class="my-4">Are you sure you want to delete <br>"<strong>{{movieObj.original_title}}</strong>"?</p>
+      <div slot="modal-footer">
+        <b-button @click="closeModal" button-size="sm">Cancel</b-button>
+        <b-button class="btn btn-danger" button-size="sm">Delete</b-button>
+      </div>
     </b-modal>
   </div>
 </template>
@@ -26,7 +30,8 @@ import UserMovie from './UserMovie.vue';
 export default {
   data() {
     return {
-      movies: null
+      movies: null,
+      movieObj: null,
     };
   },
   components: {
@@ -34,7 +39,7 @@ export default {
   },
   methods: {
     deleteMovie(selectedMovieId) {
-    this.$root.$emit('bv::show::modal', 'modal-1')
+
     console.log(movieId)
 
     console.log(this.movies)
@@ -44,6 +49,9 @@ export default {
 
     console.log(index);
     },
+    closeModal() {
+      this.$root.$emit('bv::hide::modal', 'delete-modal')
+    }
   },
   async created() {
     let resp = await fetch("http://localhost:5000/get_movies", {
