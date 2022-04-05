@@ -76,6 +76,7 @@ export default {
   },
   methods: {
     swipedRight() {
+      this.addSwipedId();
       this.saveMovie();
       setTimeout(() => {
         this.matchModal = true;
@@ -83,6 +84,7 @@ export default {
       }, 200);
     },
     swipedLeft() {
+      this.addSwipedId();
       setTimeout(() => {
         this.movieList.shift();
         this.isVisible = false;
@@ -114,7 +116,17 @@ export default {
         },
         body: JSON.stringify(this.movieList[0])
       });
-
+    },
+    addSwipedId() {
+      let resp = fetch("http://localhost:5000/swiped", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
+        },
+        body: JSON.stringify(this.movieList[0])
+      });
     }
   },
   async mounted() {
