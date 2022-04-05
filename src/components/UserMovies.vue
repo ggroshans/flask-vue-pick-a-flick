@@ -8,49 +8,68 @@
         :id="movie.id"
         :movie="movie"
         :key="movie.id"
-        @deletedMovieObj= "movieObj=$event"
+        @deletedMovieObj="movieObj = $event"
       >
-      
       </user-movie>
     </div>
-    <b-modal id="delete-modal" title="BootstrapVue" header-bg-variant="danger"
-    header-text-variant="light" size="sm">
-      <div class="delete-modal-title" slot="modal-title"><strong>Delete Confirmation</strong> </div>
-      <p v-if="movieObj" class="my-4">Are you sure you want to delete <br>"<strong>{{movieObj.original_title}}</strong>"?</p>
+    <b-modal
+      id="delete-modal"
+      title="BootstrapVue"
+      header-bg-variant="danger"
+      header-text-variant="light"
+      size="sm"
+    >
+      <div class="delete-modal-title" slot="modal-title">
+        <strong>Delete Confirmation</strong>
+      </div>
+      <p v-if="movieObj" class="my-4">
+        Are you sure you want to delete <br />"<strong>{{
+          movieObj.original_title
+        }}</strong
+        >"?
+      </p>
       <div slot="modal-footer">
         <b-button @click="closeModal" button-size="sm">Cancel</b-button>
-        <b-button class="btn btn-danger" button-size="sm">Delete</b-button>
+        <b-button
+          @click="deleteMovie(movieObj.id)"
+          class="btn btn-danger"
+          button-size="sm"
+          >Delete</b-button
+        >
       </div>
     </b-modal>
   </div>
 </template>
 
 <script>
-import UserMovie from './UserMovie.vue';
+import UserMovie from "./UserMovie.vue";
 export default {
   data() {
     return {
       movies: null,
-      movieObj: null,
+      movieObj: null
     };
   },
   components: {
-    UserMovie,
+    UserMovie
   },
   methods: {
     deleteMovie(selectedMovieId) {
+      console.log(selectedMovieId);
 
-    console.log(movieId)
+      let index = this.movies.findIndex(movie => {
+        console.log(movie.id);
+        return movie.id == selectedMovieId;
+      });
 
-    console.log(this.movies)
-    let index = this.movies.findIndex(movie => {
-      movie.id == selectedMovieId
-    })
+      console.log(this.movies);
+      this.movies.splice(index, 1);
+      console.log(this.movies);
 
-    console.log(index);
+      console.log(index);
     },
     closeModal() {
-      this.$root.$emit('bv::hide::modal', 'delete-modal')
+      this.$root.$emit("bv::hide::modal", "delete-modal");
     }
   },
   async created() {
@@ -89,6 +108,4 @@ export default {
   position: relative;
   width: minmax(190px, 1fr);
 }
-
-
 </style>
