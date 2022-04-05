@@ -63,6 +63,15 @@ class Movie(db.Model):
         self.movie_id = movie_id
         self.user_id = user_id
 
+class Swiped(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    movie_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __init__(self, movie_id, user_id):
+        self.movie_id = movie_id
+        self.user_id = user_id
+
 
 @app.after_request
 def check_JWT_expiration(response):
