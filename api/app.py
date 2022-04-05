@@ -55,10 +55,12 @@ class User(db.Model):
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     movie = db.Column(db.PickleType, nullable=False)
+    movie_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, movie, user_id):
+    def __init__(self, movie, movie_id, user_id):
         self.movie = movie
+        self.movie_id = movie_id
         self.user_id = user_id
 
 
@@ -136,7 +138,7 @@ def save_movie():
     movie_data = request.get_json()
     username = get_jwt_identity()
     user_obj = User.query.filter_by(username=username).first()
-    movie = Movie(movie_data, user_obj.id)
+    movie = Movie(movie_data, movie_data['id'], user_obj.id)
     db.session.add(movie)
     db.session.commit()
     return jsonify({"msg": "movie saved"})
