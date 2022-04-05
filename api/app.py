@@ -154,3 +154,17 @@ def get_movies():
         print(movie.movie)
         movies.append(movie.movie)
     return jsonify(movies)
+
+@app.route("/delete_movie", methods=["DELETE"])
+@jwt_required()
+def delete_movie():
+    movie_id = request.get_json()
+    username = get_jwt_identity()
+    user_obj = User.query.filter_by(username=username).first()
+
+    matched_movie = Movie.query.filter_by(user_id=user_obj.id, movie_id=movie_id).first()
+    db.session.delete(matched_movie)
+    db.session.commit()
+
+
+    return jsonify({"resp": "you hit delete route"})
