@@ -67,6 +67,7 @@ export default {
       console.log(this.movies);
 
       console.log(index);
+      this.$root.$emit("bv::hide::modal", "delete-modal");
     },
     closeModal() {
       this.$root.$emit("bv::hide::modal", "delete-modal");
