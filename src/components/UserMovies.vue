@@ -54,20 +54,25 @@ export default {
     UserMovie
   },
   methods: {
-    deleteMovie(selectedMovieId) {
-      console.log(selectedMovieId);
-
+   async deleteMovie(selectedMovieId) {
       let index = this.movies.findIndex(movie => {
-        console.log(movie.id);
         return movie.id == selectedMovieId;
-      });
-
-      console.log(this.movies);
+      });;
       this.movies.splice(index, 1);
-      console.log(this.movies);
-
-      console.log(index);
       this.$root.$emit("bv::hide::modal", "delete-modal");
+
+      let resp = await fetch("http://localhost:5000/delete_movie", {
+        method: "DELETE",
+        credentials: 'include',
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
+        },
+        body: JSON.stringify(selectedMovieId)
+      })
+        let responseData = await resp.json()
+        console.log("DELETE RESPONSE DATA", responseData)
+
     },
     closeModal() {
       this.$root.$emit("bv::hide::modal", "delete-modal");
