@@ -47,6 +47,7 @@ class User(db.Model):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     movies = db.relationship('Movie', backref='user', lazy=True)
+    swiped = db.relationship('Swiped', backref='user', lazy=True)
 
     def __init__ (self, username, password):
         self.username = username
@@ -175,3 +176,21 @@ def get_movies():
         print(movie.movie)
         movies.append(movie.movie)
     return jsonify(movies)
+
+@app.route("/swiped", methods=["GET", "POST"])
+@jwt_required()
+def swiped():
+    if request.method == "GET":
+        pass
+    if request.method == "POST":
+        movie_obj = request.get_json()
+
+        username = get_jwt_identity()
+        user_obj = User.query.filter_by(username=username).first()
+
+        swiped = Swiped(movie_obj['id'], user_obj.id)
+        db.session.add(swiped)
+        db.session.commit()
+
+        return jsonify({'msg':'swiped POST'})
+
