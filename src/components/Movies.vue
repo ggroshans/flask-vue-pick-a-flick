@@ -68,7 +68,8 @@ export default {
     return {
       isVisible: true,
       movieList: [],
-      matchModal: false
+      matchModal: false,
+      swipedIds: []
     };
   },
   components: {
@@ -128,6 +129,19 @@ export default {
         body: JSON.stringify(this.movieList[0])
       });
     }
+  },
+  async created() {
+    const resp = await fetch("http://localhost:5000/swiped", {
+      method: "GET",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
+      },
+    })
+    let responseData = await resp.json()
+    this.swipedIds = responseData
+    console.log("THIS", this.swipedIds)
   },
   async mounted() {
     let loading = this.$loading.show({
