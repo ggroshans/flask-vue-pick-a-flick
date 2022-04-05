@@ -88,6 +88,7 @@ export default {
       this.addSwipedId();
       setTimeout(() => {
         this.movieList.shift();
+        this.checkDuplicateMovie()
         this.isVisible = false;
         console.log(this.movieList);
       }, 200);
@@ -97,6 +98,7 @@ export default {
     },
     onHidden() {
       this.movieList.shift();
+      this.checkDuplicateMovie();
       this.isVisible = true;
       this.matchModal = false;
     },
@@ -128,6 +130,15 @@ export default {
         },
         body: JSON.stringify(this.movieList[0])
       });
+    },
+    checkDuplicateMovie(){
+      while (true) {
+        if (this.swipedIds.includes(this.movieList[0].id)) {
+          this.movieList.shift()
+        } else {
+          break;
+        }
+      }
     }
   },
   async created() {
@@ -141,7 +152,6 @@ export default {
     })
     let responseData = await resp.json()
     this.swipedIds = responseData
-    console.log("THIS", this.swipedIds)
   },
   async mounted() {
     let loading = this.$loading.show({
@@ -170,6 +180,7 @@ export default {
     console.log("CATEGORY LIST WHOLE", responseData);
     loading.hide();
     this.movieList = responseData.data.results;
+    this.checkDuplicateMovie()
   }
 };
 </script>
