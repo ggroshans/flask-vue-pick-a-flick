@@ -79,7 +79,7 @@ export default {
     }
   },
   async created() {
-    let resp = await fetch("http://localhost:5000/get_movies", {
+    let resp = await fetch("http://localhost:5000/user_movie_list", {
       method: "GET",
       credentials: "include",
       headers: {

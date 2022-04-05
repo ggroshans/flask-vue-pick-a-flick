@@ -155,7 +155,7 @@ def delete_movie():
     db.session.commit()
     return jsonify({"resp": "you hit delete route"})
 
-@app.route("/get_movies")
+@app.route("/user_movie_list")
 @jwt_required()
 def get_movies():
     username = get_jwt_identity()
