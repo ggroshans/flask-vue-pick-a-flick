@@ -124,7 +124,7 @@ export default {
       backgroundColor: "#fff",
       opacity: 0.5
     });
-    const resp = await fetch("http://localhost:5000/movies", {
+    const resp = await fetch("http://localhost:5000/movie_list", {
       method: "POST",
       credentials: "include", //allows fetch to send cookie
       headers: {
