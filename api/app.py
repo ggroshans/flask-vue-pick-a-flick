@@ -181,7 +181,15 @@ def get_movies():
 @jwt_required()
 def swiped():
     if request.method == "GET":
-        pass
+        username = get_jwt_identity()
+        user_obj = User.query.filter_by(username=username).first()
+
+        swiped_ids = []
+        for id in user_obj.swiped:
+            swiped_ids.append(id.movie_id)
+        
+        return jsonify(swiped_ids)
+
     if request.method == "POST":
         movie_obj = request.get_json()
 
@@ -192,5 +200,5 @@ def swiped():
         db.session.add(swiped)
         db.session.commit()
 
-        return jsonify({'msg':'swiped POST'})
+    return jsonify({'msg':''})
 
