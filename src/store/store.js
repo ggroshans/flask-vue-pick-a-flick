@@ -16,6 +16,7 @@ export const store = new Vuex.Store({
         token: null,
         authStatus: false,
         genresQuery: {},
+        userMovieList: {},
     },
     getters: {
         getCurrentMovie (state) {
@@ -26,6 +27,9 @@ export const store = new Vuex.Store({
         },
         getGenresQuery (state) {
             return state.genresQuery;
+        },
+        getUserMovieList (state) {
+            return state.userMovieList;
         }
     },
     mutations: {
@@ -37,6 +41,9 @@ export const store = new Vuex.Store({
         },
         setGenresQuery(state, array) {
             state.genresQuery = array;
+        },
+        setUserMovieList(state, array) {
+            state.userMovieList = array;
         }
 
     },

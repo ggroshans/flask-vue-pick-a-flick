@@ -278,3 +278,43 @@ def swiped():
         db.session.commit()
 
     return jsonify({'msg': ''})
+
+@app.route("/delete_searches", methods=["DELETE"])
+@jwt_required()
+def delete_searches():
+    username = get_jwt_identity()
+    user_obj = User.query.filter_by(username=username).first()
+
+    genres_obj = Genres.query.filter_by(user_id=user_obj.id).all()
+    for genre_query in genres_obj:
+        db.session.delete(genre_query)
+        db.session.commit()
+
+    swiped_obj = Swiped.query.filter_by(user_id=user_obj.id).all()
+    for swiped_movie in swiped_obj:
+        db.session.delete(swiped_movie)
+        db.session.commit()
+
+    return ""
+@app.route("/delete_everything", methods=["DELETE"])
+@jwt_required()
+def delete_everything():
+    username = get_jwt_identity()
+    user_obj = User.query.filter_by(username=username).first()
+
+    genres_obj = Genres.query.filter_by(user_id=user_obj.id).all()
+    for genre_query in genres_obj:
+        db.session.delete(genre_query)
+        db.session.commit()
+
+    swiped_obj = Swiped.query.filter_by(user_id=user_obj.id).all()
+    for swiped_movie in swiped_obj:
+        db.session.delete(swiped_movie)
+        db.session.commit()
+
+    movies_obj = Movie.query.filter_by(user_id=user_obj.id).all()
+    for movie in movies_obj:
+        db.session.delete(movie)
+        db.session.commit()
+
+    return ""

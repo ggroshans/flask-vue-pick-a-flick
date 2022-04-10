@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>Profile Page</h3>
+    <h3>Movies</h3>
     <div class="movie-grid-container">
       <user-movie
         class="movie-grid-item"
@@ -54,25 +54,24 @@ export default {
     UserMovie
   },
   methods: {
-   async deleteMovie(selectedMovieId) {
+    async deleteMovie(selectedMovieId) {
       let index = this.movies.findIndex(movie => {
         return movie.id == selectedMovieId;
-      });;
+      });
       this.movies.splice(index, 1);
       this.$root.$emit("bv::hide::modal", "delete-modal");
 
       let resp = await fetch("http://localhost:5000/delete_movie", {
         method: "DELETE",
-        credentials: 'include',
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
           "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
         },
         body: JSON.stringify(selectedMovieId)
-      })
-        let responseData = await resp.json()
-        console.log("DELETE RESPONSE DATA", responseData)
-
+      });
+      let responseData = await resp.json();
+      console.log("DELETE RESPONSE DATA", responseData);
     },
     closeModal() {
       this.$root.$emit("bv::hide::modal", "delete-modal");
@@ -94,7 +93,9 @@ export default {
       this.$store.commit("setAuthStatus", false);
       this.$router.push("/login");
     }
-    this.movies = responseData;
+    this.$store.commit("setUserMovieList", responseData);
+    this.movies = this.$store.getters.getUserMovieList;
+    // this.movies = responseData;
   }
 };
 </script>
