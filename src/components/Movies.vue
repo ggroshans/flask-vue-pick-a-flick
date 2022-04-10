@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Currently Selection: <span v-for="genreObj in currentGenres"> {{genreObj.name}} </span></h2>
+    <h2>Currently Selection: <span v-for="genreObj in currentGenres" :key="genreObj.id"> {{genreObj.name}} </span></h2>
     <section v-if="movieList[0]" class="card-container">
       <div
         class="flex justify-content-center align-items-center"
@@ -142,6 +142,17 @@ export default {
         }
       }
     }
+  },
+  async beforeCreate() {
+    const resp = await fetch("http://localhost:5000/genre_query", {
+      method: "POST",
+      credentials: 'include',
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
+      },
+      body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
+    })
   },
   async created() {
     const resp = await fetch("http://localhost:5000/swiped", {

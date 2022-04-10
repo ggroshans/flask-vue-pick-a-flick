@@ -1,5 +1,6 @@
 
 import os
+from pydoc import pager
 import bcrypt
 import requests
 
@@ -149,14 +150,19 @@ def logout():
 def movies():
     key = os.getenv('MOVIE_KEY')
     data = request.get_json()
+
     genres = data["genres"]
     genre_id_list = []
-
     for genre_obj in genres:
-        genre_id_list.append(str(genre_obj['id']))
+        genre_id_list.append(genre_obj['id'])
+    genre_query_string = ",".join([str(genre_id['id']) for genre_id in genres])
 
-    genre_query_string = ",".join(genre_id_list)
-    response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_query_string}&api_key={key}&language=en-US')
+    username = get_jwt_identity()
+    user_obj = User.query.filter_by(username=username).first()
+    genres_obj = Genres.query.filter_by(user_id=user_obj.id, genres=genre_id_list).first()
+    page = genres_obj.page_number
+
+    response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_query_string}&api_key={key}&page={page}&language=en-US')
     return jsonify({"data": response.json()})
 
 @app.route("/save_movie", methods=["POST"])
@@ -181,6 +187,27 @@ def delete_movie():
     db.session.delete(matched_movie)
     db.session.commit()
     return jsonify({"resp": "you hit delete route"})
+
+@app.route("/genre_query", methods=["POST"])
+@jwt_required()
+def genre_query():
+    data = request.get_json()
+    genres = data["genres"]
+    genre_id_list = []
+
+    for genre_obj in genres:
+        genre_id_list.append(genre_obj['id'])
+
+    username = get_jwt_identity()
+    user_obj = User.query.filter_by(username=username).first()
+
+    if not Genres.query.filter_by(user_id=user_obj.id, genres=genre_id_list).first():
+        genre_obj = Genres(genre_id_list, 1, user_obj.id)
+        db.session.add(genre_obj)
+        db.session.commit()
+
+    return jsonify({"msg": "sucessful /genre_query"})
+
 
 @app.route("/user_movie_list")
 @jwt_required()
