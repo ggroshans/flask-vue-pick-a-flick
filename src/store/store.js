@@ -15,6 +15,7 @@ export const store = new Vuex.Store({
         currentMovieObj: {},
         token: null,
         authStatus: false,
+        genresQuery: [],
     },
     getters: {
         getCurrentMovie (state) {
@@ -22,6 +23,9 @@ export const store = new Vuex.Store({
         },
         getAuthStatus (state) {
             return state.authStatus;
+        },
+        getGenresQuery (state) {
+            return state.genresQuery;
         }
     },
     mutations: {
@@ -30,7 +34,11 @@ export const store = new Vuex.Store({
         },
         setAuthStatus(state, status) {
             state.authStatus = status;
+        },
+        setGenresQuery(state, array) {
+            state.genresQuery = array;
         }
+
     },
     plugins: [vuexLocal.plugin]
 })

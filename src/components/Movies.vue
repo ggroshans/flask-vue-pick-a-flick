@@ -160,6 +160,7 @@ export default {
       backgroundColor: "#fff",
       opacity: 0.5
     });
+
     const resp = await fetch("http://localhost:5000/movie_list", {
       method: "POST",
       credentials: "include", //allows fetch to send cookie
@@ -167,7 +168,7 @@ export default {
         "Content-Type": "application/json",
         "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
       },
-      body: JSON.stringify({ genre_id: this.$route.params.genre })
+      body: JSON.stringify({ genre_ids: this.$store.getters.getGenresQuery })
     });
 
     let responseData = await resp.json(responseData);
