@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Currently Selection: {{currentGenres}}</h2>
+    <h2>Currently Selection: <span v-for="genreObj in currentGenres"> {{genreObj.name}} </span></h2>
     <section v-if="movieList[0]" class="card-container">
       <div
         class="flex justify-content-center align-items-center"
