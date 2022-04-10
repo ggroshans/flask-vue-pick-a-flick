@@ -136,11 +136,16 @@ def logout():
 @app.route('/movie_list', methods=["POST"])
 @jwt_required()
 def movies():
-    data = request.get_json()
-    genre_ids = data['genre_ids']
-    genre_ids = ",".join(str(id) for id in data['genre_ids'])
     key = os.getenv('MOVIE_KEY')
-    response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_ids}&api_key={key}&language=en-US')
+    data = request.get_json()
+    genres = data["genres"]
+    genre_id_list = []
+
+    for genre_obj in genres:
+        genre_id_list.append(str(genre_obj['id']))
+
+    genre_query_string = ",".join(genre_id_list)
+    response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_query_string}&api_key={key}&language=en-US')
     return jsonify({"data": response.json()})
 
 @app.route("/save_movie", methods=["POST"])

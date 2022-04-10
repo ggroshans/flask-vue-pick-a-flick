@@ -121,15 +121,17 @@ export default {
   methods: {
     clickGenre(genre) {
       genre.selected = !genre.selected;
-      if (this.selectedGenres.includes(genre.id)) {
-        let index = this.selectedGenres.findIndex(number => number == genre.id);
+      if (genre.selected == false) {
+        let index = this.selectedGenres.findIndex(obj => obj.id == genre.id);
         this.selectedGenres.splice(index, 1);
         this.$store.commit("setGenresQuery", this.selectedGenres)
       } else {
-        this.selectedGenres.push(genre.id);
+        let genreObj = {}
+        genreObj['name'] = genre.name;
+        genreObj['id'] = genre.id;
+        this.selectedGenres.push(genreObj);
         this.$store.commit("setGenresQuery", this.selectedGenres)
       }
-      console.log(this.selectedGenres);
     }
   },
   created() {

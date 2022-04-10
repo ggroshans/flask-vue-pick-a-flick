@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>Currently Selection: {{currentGenres}}</h2>
     <section v-if="movieList[0]" class="card-container">
       <div
         class="flex justify-content-center align-items-center"
@@ -69,7 +70,8 @@ export default {
       isVisible: true,
       movieList: [],
       matchModal: false,
-      swipedIds: []
+      swipedIds: [],
+      currentGenres: this.$store.getters.getGenresQuery,
     };
   },
   components: {
@@ -168,7 +170,7 @@ export default {
         "Content-Type": "application/json",
         "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
       },
-      body: JSON.stringify({ genre_ids: this.$store.getters.getGenresQuery })
+      body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
     });
 
     let responseData = await resp.json(responseData);

@@ -15,7 +15,7 @@ export const store = new Vuex.Store({
         currentMovieObj: {},
         token: null,
         authStatus: false,
-        genresQuery: [],
+        genresQuery: {},
     },
     getters: {
         getCurrentMovie (state) {
