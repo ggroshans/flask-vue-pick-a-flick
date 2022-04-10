@@ -48,6 +48,7 @@ class User(db.Model):
     password = db.Column(db.String(80), nullable=False)
     movies = db.relationship('Movie', backref='user', lazy=True)
     swiped = db.relationship('Swiped', backref='user', lazy=True)
+    genres = db.relationship('Genres', backref='user', lazy=True)
 
     def __init__ (self, username, password):
         self.username = username
@@ -73,6 +74,16 @@ class Swiped(db.Model):
         self.movie_id = movie_id
         self.user_id = user_id
 
+class Genres(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    genres = db.Column(db.PickleType, nullable=False)
+    page_number = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __init__(self, genres, page_number, user_id):
+        self.genres = genres
+        self.page_number = page_number
+        self.user_id = user_id
 
 @app.after_request
 def check_JWT_expiration(response):
