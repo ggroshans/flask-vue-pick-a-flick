@@ -22,16 +22,17 @@ from datetime import timedelta
 from datetime import timezone
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True) #supports_credentials allows cookies or authenticated requests to be made cross origins
+# supports_credentials allows cookies or authenticated requests to be made cross origins
+CORS(app, supports_credentials=True)
 
-                           
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 app.config['SECRET_KEY'] = SECRET_KEY
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
-app.config["JWT_SECRET_KEY"] = "super-secret" 
+app.config["JWT_SECRET_KEY"] = "super-secret"
 app.config["JWT_COOKIE_SECURE"] = False
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
@@ -51,9 +52,10 @@ class User(db.Model):
     swiped = db.relationship('Swiped', backref='user', lazy=True)
     genres = db.relationship('Genres', backref='user', lazy=True)
 
-    def __init__ (self, username, password):
+    def __init__(self, username, password):
         self.username = username
         self.password = password
+
 
 class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -66,6 +68,7 @@ class Movie(db.Model):
         self.movie_id = movie_id
         self.user_id = user_id
 
+
 class Swiped(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     movie_id = db.Column(db.Integer, nullable=False)
@@ -74,6 +77,7 @@ class Swiped(db.Model):
     def __init__(self, movie_id, user_id):
         self.movie_id = movie_id
         self.user_id = user_id
+
 
 class Genres(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -85,6 +89,7 @@ class Genres(db.Model):
         self.genres = genres
         self.page_number = page_number
         self.user_id = user_id
+
 
 @app.after_request
 def check_JWT_expiration(response):
@@ -101,6 +106,7 @@ def check_JWT_expiration(response):
     except (RuntimeError, KeyError):
         return response
 
+
 @app.route("/login", methods=["POST"])
 def login():
     data = request.get_json()
@@ -108,7 +114,7 @@ def login():
     password = data['password']
 
     user = User.query.filter_by(username=username).first()
-    
+
     if user:
         if bcrypt.checkpw(bytes(password, 'utf-8'), user.password):
             access_token = create_access_token(identity=username)
@@ -116,9 +122,9 @@ def login():
             set_access_cookies(response, access_token)
             return response
         else:
-            return jsonify({"error": {"password" :"Passwords do not match"}})
+            return jsonify({"error": {"password": "Passwords do not match"}})
     else:
-        return jsonify({"error": {"username":"This username does not exist"}})
+        return jsonify({"error": {"username": "This username does not exist"}})
 
 
 @app.route("/register", methods=["POST"])
@@ -129,9 +135,10 @@ def register():
 
     if User.query.filter_by(username=username).first():
         return jsonify({"error": "Username already exists"})
-        
+
     else:
-        hashed_password = bcrypt.hashpw(bytes(password, 'utf-8'),bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(
+            bytes(password, 'utf-8'), bcrypt.gensalt())
         user = User(username, hashed_password)
 
         db.session.add(user)
@@ -144,6 +151,7 @@ def logout():
     response = jsonify({"msg": "logout successful"})
     unset_jwt_cookies(response)
     return response
+
 
 @app.route('/movie_list', methods=["POST"])
 @jwt_required()
@@ -159,11 +167,14 @@ def movies():
 
     username = get_jwt_identity()
     user_obj = User.query.filter_by(username=username).first()
-    genres_obj = Genres.query.filter_by(user_id=user_obj.id, genres=genre_id_list).first()
+    genres_obj = Genres.query.filter_by(
+        user_id=user_obj.id, genres=genre_id_list).first()
     page = genres_obj.page_number
 
-    response = requests.get(f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_query_string}&api_key={key}&page={page}&language=en-US')
+    response = requests.get(
+        f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_query_string}&api_key={key}&page={page}&language=en-US')
     return jsonify({"data": response.json()})
+
 
 @app.route("/save_movie", methods=["POST"])
 @jwt_required()
@@ -176,6 +187,7 @@ def save_movie():
     db.session.commit()
     return jsonify({"msg": "movie saved"})
 
+
 @app.route("/delete_movie", methods=["DELETE"])
 @jwt_required()
 def delete_movie():
@@ -183,10 +195,12 @@ def delete_movie():
     username = get_jwt_identity()
     user_obj = User.query.filter_by(username=username).first()
 
-    matched_movie = Movie.query.filter_by(user_id=user_obj.id, movie_id=movie_id).first()
+    matched_movie = Movie.query.filter_by(
+        user_id=user_obj.id, movie_id=movie_id).first()
     db.session.delete(matched_movie)
     db.session.commit()
     return jsonify({"resp": "you hit delete route"})
+
 
 @app.route("/genre_query", methods=["POST"])
 @jwt_required()
@@ -209,6 +223,24 @@ def genre_query():
     return jsonify({"msg": "sucessful /genre_query"})
 
 
+@app.route("/increment_page", methods=["POST"])
+@jwt_required()
+def increment_page():
+    data = request.get_json()
+    genres = data["genres"]
+    genre_id_list = []
+
+    for genre_obj in genres:
+        genre_id_list.append(genre_obj['id'])
+
+    username = get_jwt_identity()
+    user_obj = User.query.filter_by(username=username).first()
+
+    genre_obj = Genres.query.filter_by(user_id=user_obj.id, genres=genre_id_list).first()
+    genre_obj.page_number += 1
+    db.session.commit()
+    return jsonify({"msg": "successful update page number"})
+
 @app.route("/user_movie_list")
 @jwt_required()
 def get_movies():
@@ -221,6 +253,7 @@ def get_movies():
         movies.append(movie.movie)
     return jsonify(movies)
 
+
 @app.route("/swiped", methods=["GET", "POST"])
 @jwt_required()
 def swiped():
@@ -231,7 +264,7 @@ def swiped():
         swiped_ids = []
         for id in user_obj.swiped:
             swiped_ids.append(id.movie_id)
-        
+
         return jsonify(swiped_ids)
 
     if request.method == "POST":
@@ -244,5 +277,4 @@ def swiped():
         db.session.add(swiped)
         db.session.commit()
 
-    return jsonify({'msg':''})
-
+    return jsonify({'msg': ''})

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <h2>Currently Selection: <span v-for="genreObj in currentGenres" :key="genreObj.id"> {{genreObj.name}} </span></h2>
+    <h2>
+      Currently Selection:
+      <span v-for="genreObj in currentGenres" :key="genreObj.id">
+        {{ genreObj.name }}
+      </span>
+    </h2>
     <section v-if="movieList[0]" class="card-container">
       <div
         class="flex justify-content-center align-items-center"
@@ -71,7 +76,7 @@ export default {
       movieList: [],
       matchModal: false,
       swipedIds: [],
-      currentGenres: this.$store.getters.getGenresQuery,
+      currentGenres: this.$store.getters.getGenresQuery
     };
   },
   components: {
@@ -90,7 +95,7 @@ export default {
       this.addSwipedId();
       setTimeout(() => {
         this.movieList.shift();
-        this.checkDuplicateMovie()
+        this.checkDuplicateMovie();
         this.isVisible = false;
         console.log(this.movieList);
       }, 200);
@@ -133,10 +138,10 @@ export default {
         body: JSON.stringify(this.movieList[0])
       });
     },
-    checkDuplicateMovie(){
+    checkDuplicateMovie() {
       while (true) {
         if (this.swipedIds.includes(this.movieList[0].id)) {
-          this.movieList.shift()
+          this.movieList.shift();
         } else {
           break;
         }
@@ -146,25 +151,25 @@ export default {
   async beforeCreate() {
     const resp = await fetch("http://localhost:5000/genre_query", {
       method: "POST",
-      credentials: 'include',
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
       },
       body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
-    })
+    });
   },
   async created() {
     const resp = await fetch("http://localhost:5000/swiped", {
       method: "GET",
-      credentials: 'include',
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
-      },
-    })
-    let responseData = await resp.json()
-    this.swipedIds = responseData
+      }
+    });
+    let responseData = await resp.json();
+    this.swipedIds = responseData;
   },
   async mounted() {
     let loading = this.$loading.show({
@@ -194,7 +199,42 @@ export default {
     console.log("CATEGORY LIST WHOLE", responseData);
     loading.hide();
     this.movieList = responseData.data.results;
-    this.checkDuplicateMovie()
+    this.checkDuplicateMovie();
+  },
+  watch: {
+    movieList: async function getMoreMovies() {
+      if (this.movieList.length <= 10) {
+        const resp1 = await fetch("http://localhost:5000/increment_page", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
+          },
+          body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
+        });
+        const resp2 = await fetch("http://localhost:5000/movie_list", {
+          method: "POST",
+          credentials: "include", //allows fetch to send cookie
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
+          },
+          body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
+        });
+
+        let responseData = await resp2.json(responseData);
+        if (responseData.msg == "Token has expired") {
+          $cookies.remove("access_token_cookie");
+          $cookies.remove("csrf_access_token");
+          this.$store.commit("setAuthStatus", false);
+          this.$router.push("/login");
+        }
+        console.log("CATEGORY LIST WHOLE", responseData);
+        this.movieList = this.movieList.concat(responseData.data.results)
+        console.log(this.movieList)
+      }
+    }
   }
 };
 </script>
