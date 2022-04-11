@@ -91,7 +91,7 @@ export default {
           "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
         }
       });
-        this.$store.commit("setUserMovieList", [])
+        this.$set("setUserMovieList", [])
     },
     closeModal() {
       this.$root.$emit("bv::hide::modal", "reset-modal");
