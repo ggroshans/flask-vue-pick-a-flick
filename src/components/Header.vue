@@ -1,16 +1,28 @@
 <template>
   <div>
-    <router-link to="/movies" v-if="isLoggedIn"
-      ><b-button><b-icon icon="arrow-left"></b-icon> Back to Current Search</b-button>
+    <router-link
+      to="/movies"
+      v-if="
+        isLoggedIn &&
+          !(this.$route.name == 'Movies') &&
+          !(this.$route.name == 'Genres')
+      "
+      ><b-button
+        ><b-icon icon="arrow-left"></b-icon> Back to Current Search</b-button
+      >
     </router-link>
-    <router-link to="/genres" v-if="isLoggedIn"
+    <router-link
+      to="/genres"
+      v-if="isLoggedIn && !(this.$route.name == 'Genres')"
       ><b-button><b-icon icon="plus"></b-icon> New Search</b-button>
     </router-link>
     <router-link to="/user/profile" v-if="isLoggedIn"
       ><b-button><b-icon icon="person-fill"></b-icon> Profile</b-button>
     </router-link>
 
-    <b-button @click="logout" v-if="isLoggedIn"><b-icon icon="door-open"></b-icon> Logout</b-button>
+    <b-button @click="logout" v-if="isLoggedIn"
+      ><b-icon icon="door-open"></b-icon> Logout</b-button
+    >
     <h1>Movie Date</h1>
   </div>
 </template>
