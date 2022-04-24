@@ -89,6 +89,11 @@ export default {
         router.push('login')
       }
     }
+  },
+  beforeCreate() {
+    if (this.$store.getters.getAuthStatus) {
+      router.push("/genres")
+    }
   }
 };
 </script>

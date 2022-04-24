@@ -103,6 +103,11 @@ export default {
         this.$router.push('genres')
       }
     }
+  },
+    beforeCreate() {
+    if (this.$store.getters.getAuthStatus) {
+      router.push("/genres")
+    }
   }
 };
 </script>
