@@ -19,7 +19,6 @@ export default {
   },
   props: {
     movie: Object,
-    deleteMovie: Function,
   },
   methods: {
     getDeletedMovieObj() {

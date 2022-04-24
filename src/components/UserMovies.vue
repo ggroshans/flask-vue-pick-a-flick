@@ -46,7 +46,6 @@ import UserMovie from "./UserMovie.vue";
 export default {
   data() {
     return {
-      movies: null,
       movieObj: null
     };
   },
@@ -76,6 +75,11 @@ export default {
     closeModal() {
       this.$root.$emit("bv::hide::modal", "delete-modal");
     }
+  },
+  computed: {
+    movies () {
+      return this.$store.getters.getUserMovieList;
+    } 
   },
   async created() {
     let resp = await fetch("http://localhost:5000/user_movie_list", {
