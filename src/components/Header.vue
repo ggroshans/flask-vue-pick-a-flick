@@ -1,42 +1,49 @@
 <template>
   <div>
+    <router-link to="/movies" v-if="isLoggedIn"
+      ><b-button><b-icon icon="arrow-left"></b-icon> Back to Current Search</b-button>
+    </router-link>
+    <router-link to="/genres" v-if="isLoggedIn"
+      ><b-button><b-icon icon="plus"></b-icon> New Search</b-button>
+    </router-link>
+    <router-link to="/user/profile" v-if="isLoggedIn"
+      ><b-button><b-icon icon="person-fill"></b-icon> Profile</b-button>
+    </router-link>
+
+    <b-button @click="logout" v-if="isLoggedIn"><b-icon icon="door-open"></b-icon> Logout</b-button>
     <h1>Movie Date</h1>
-    <button @click="logout" v-if="isLoggedIn">Logout</button>
-    <router-link to="/user/profile" v-if="isLoggedIn"><button>Profile</button> </router-link> 
   </div>
 </template>
 
 <script>
 export default {
-   data() {
-       return {
-
-       }
-   },
-   methods: {
-       async logout() {
-           const resp = await fetch("http://localhost:5000/logout", {
-               method: "POST",
-               credentials: "include",
-               headers: {
-                   "Content-Type": "application/json",
-                   "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
-               }
-           })
-           const responseData = await resp.json()
-           $cookies.remove("csrf_access_token")
-           console.log(responseData)
-           this.$router.push("/login")
-           this.$store.commit("setAuthStatus", false)
-       }
-   },
-  computed: {
-        isLoggedIn() {
-            console.log(this.$store.getters.getAuthStatus)
-            return this.$store.getters.getAuthStatus;
+  data() {
+    return {};
+  },
+  methods: {
+    async logout() {
+      const resp = await fetch("http://localhost:5000/logout", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
+        }
+      });
+      const responseData = await resp.json();
+      $cookies.remove("csrf_access_token");
+      console.log(responseData);
+      this.$router.push("/login");
+      this.$store.commit("setAuthStatus", false);
     }
-}
-}
+  },
+  computed: {
+    isLoggedIn() {
+      console.log(this.$store.getters.getAuthStatus);
+      return this.$store.getters.getAuthStatus;
+    }
+  }
+};
 </script>
 
 <style scoped>
