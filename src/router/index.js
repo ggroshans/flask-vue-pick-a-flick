@@ -8,7 +8,7 @@ import Splash from '../components/Splash'
 import Movies from '../components/Movies.vue'
 import Genres from '../components/Genres.vue'
 import Movie from '../components/Movie.vue'
-import UserMovies from '../components/UserMovies.vue'
+import EmptyStack from '../components/EmptyStack.vue'
 import Profile from '../components/Profile.vue'
 
 Vue.use(Router)
@@ -45,15 +45,15 @@ export default new Router({
       name: 'Movie',
       component: Movie
     },
-    // {
-    //   path: '/user/profile/movies',
-    //   name: 'UserMovies',
-    //   component: UserMovies,
-    // },
     {
       path: '/user/profile',
       name: 'Profile',
       component: Profile,
+    },
+    {
+      path: '/movies/emptystack',
+      name: 'EmptyStack',
+      component: EmptyStack,
     }
 
   ]

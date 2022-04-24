@@ -2,19 +2,25 @@
   <div class="container">
     <div class="row justify-content-center">
       <router-link to="/login">
-      <button class="btn btn-primary">Login</button>
+        <button class="btn btn-primary">Login</button>
       </router-link>
     </div>
     <div class="row mt-3 justify-content-center">
-    <router-link to="/register">
-      <button class="btn btn-primary">Register</button>
-    </router-link>
+      <router-link to="/register">
+        <button class="btn btn-primary">Register</button>
+      </router-link>
     </div>
   </div>
 </template>
 <script>
 /* eslint-disable */
-export default {}
+export default {
+  beforeCreate() {
+    if (this.$store.getters.getAuthStatus) {
+      this.$router.push("/genres");
+    }
+  }
+};
 </script>
 
 <style scoped>

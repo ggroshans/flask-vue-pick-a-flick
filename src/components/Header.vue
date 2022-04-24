@@ -5,7 +5,8 @@
       v-if="
         isLoggedIn &&
           !(this.$route.name == 'Movies') &&
-          !(this.$route.name == 'Genres')
+          !(this.$route.name == 'Genres') &&
+          !(this.$route.name == 'EmptyStack')
       "
       ><b-button
         ><b-icon icon="arrow-left"></b-icon> Back to Current Search</b-button

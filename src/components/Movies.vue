@@ -76,7 +76,8 @@ export default {
       movieList: [],
       matchModal: false,
       swipedIds: [],
-      currentGenres: this.$store.getters.getGenresQuery
+      currentGenres: this.$store.getters.getGenresQuery,
+      fetchMoreMovies: true
     };
   },
   components: {
@@ -95,7 +96,7 @@ export default {
       this.addSwipedId();
       setTimeout(() => {
         this.movieList.shift();
-        this.checkDuplicateMovie();
+        this.validateMovie();
         this.isVisible = false;
         console.log(this.movieList);
       }, 200);
@@ -105,7 +106,7 @@ export default {
     },
     onHidden() {
       this.movieList.shift();
-      this.checkDuplicateMovie();
+      this.validateMovie();
       this.isVisible = true;
       this.matchModal = false;
     },
@@ -138,13 +139,27 @@ export default {
         body: JSON.stringify(this.movieList[0])
       });
     },
-    checkDuplicateMovie() {
-      while (true) {
-        if (this.swipedIds.includes(this.movieList[0].id)) {
-          this.movieList.shift();
-        } else {
-          break;
+    validateMovie() {
+      try {
+        while (true) {
+          if (this.swipedIds.includes(this.movieList[0].id)) {
+            this.movieList.shift();
+          } else {
+            break;
+          }
         }
+        while (true) {
+          if (
+            this.movieList[0].overview == "" ||
+            !this.movieList[0].poster_path
+          ) {
+            this.movieList.shift();
+          } else {
+            break;
+          }
+        }
+      } catch (error) {
+        this.$router.push("/movies/emptystack");
       }
     }
   },
@@ -158,7 +173,6 @@ export default {
       },
       body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
     });
- 
 
     const resp2 = await fetch("http://localhost:5000/swiped", {
       method: "GET",
@@ -170,7 +184,6 @@ export default {
     });
     let responseData1 = await resp2.json();
     this.swipedIds = responseData1;
-
 
     let loading = this.$loading.show({
       loader: "dots",
@@ -189,7 +202,7 @@ export default {
       body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
     });
 
-let responseData2 = await resp3.json(responseData2);
+    let responseData2 = await resp3.json(responseData2);
     if (responseData2.msg == "Token has expired") {
       $cookies.remove("access_token_cookie");
       $cookies.remove("csrf_access_token");
@@ -199,11 +212,11 @@ let responseData2 = await resp3.json(responseData2);
     console.log("CATEGORY LIST WHOLE", responseData2);
     loading.hide();
     this.movieList = responseData2.data.results;
-    this.checkDuplicateMovie();
+    this.validateMovie();
   },
   watch: {
     movieList: async function getMoreMovies() {
-      if (this.movieList.length <= 10) {
+      if (this.movieList.length <= 10 && this.fetchMoreMovies) {
         const resp1 = await fetch("http://localhost:5000/increment_page", {
           method: "POST",
           credentials: "include",
@@ -229,10 +242,17 @@ let responseData2 = await resp3.json(responseData2);
           $cookies.remove("csrf_access_token");
           this.$store.commit("setAuthStatus", false);
           this.$router.push("/login");
+        } else if (
+          responseData.data.results.length == 0 &&
+          this.movieList.length == 0
+        ) {
+          this.$router.push("/movies/emptystack");
+        } else if (responseData.data.results.length == 0) {
+          this.fetchMoreMovies = false;
         }
         console.log("CATEGORY LIST WHOLE", responseData);
-        this.movieList = this.movieList.concat(responseData.data.results)
-        console.log(this.movieList)
+        this.movieList = this.movieList.concat(responseData.data.results);
+        console.log(this.movieList);
       }
     }
   }
