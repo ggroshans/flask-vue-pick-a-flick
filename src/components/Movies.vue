@@ -113,7 +113,7 @@ export default {
       this.$store.commit("setCurrentMovieObj", this.movieList[0]);
       this.$router.push({
         name: "Movie",
-        params: { id: this.movieList[0].id }
+        params: { title: this.movieList[0].title.split(" ").join("") }
       });
     },
     saveMovie() {

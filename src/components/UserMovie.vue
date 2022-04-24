@@ -1,29 +1,39 @@
 <template>
   <div>
-    <img :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="" />
+    <div>
+      <img
+        @click="goToMoviePage()"
+        :src="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+        alt=""
+      />
+    </div>
     <b-icon
       icon="x-square-fill"
       class="close-icon"
       @click="getDeletedMovieObj()"
     ></b-icon>
   </div>
-
-
 </template>
 
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   props: {
-    movie: Object,
+    movie: Object
   },
   methods: {
     getDeletedMovieObj() {
-      this.$emit("deletedMovieObj", this.movie)
-      this.$root.$emit('bv::show::modal', 'delete-modal')
+      this.$emit("deletedMovieObj", this.movie);
+      this.$root.$emit("bv::show::modal", "delete-modal");
+    },
+    goToMoviePage() {
+      this.$store.commit("setCurrentMovieObj", this.movie);
+      this.$router.push({
+        name: "Movie",
+        params: { title: this.movie.title.split(" ").join("") }
+      });
     }
   }
 };

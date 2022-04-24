@@ -41,7 +41,7 @@ export default new Router({
       component: Genres,
     },
     {
-      path: '/movie/:id',
+      path: '/movie/:title',
       name: 'Movie',
       component: Movie
     },
