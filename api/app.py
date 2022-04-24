@@ -170,7 +170,7 @@ def movies():
     genres_obj = Genres.query.filter_by(
         user_id=user_obj.id, genres=genre_id_list).first()
     page = genres_obj.page_number
-
+    print("page", page)
     response = requests.get(
         f'https://api.themoviedb.org/4/discover/movie?with_genres={genre_query_string}&api_key={key}&page={page}&language=en-US')
     return jsonify({"data": response.json()})

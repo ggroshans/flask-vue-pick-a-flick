@@ -158,9 +158,9 @@ export default {
       },
       body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
     });
-  },
-  async created() {
-    const resp = await fetch("http://localhost:5000/swiped", {
+ 
+
+    const resp2 = await fetch("http://localhost:5000/swiped", {
       method: "GET",
       credentials: "include",
       headers: {
@@ -168,10 +168,10 @@ export default {
         "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
       }
     });
-    let responseData = await resp.json();
-    this.swipedIds = responseData;
-  },
-  async mounted() {
+    let responseData1 = await resp2.json();
+    this.swipedIds = responseData1;
+
+
     let loading = this.$loading.show({
       loader: "dots",
       color: "#653780",
@@ -179,7 +179,7 @@ export default {
       opacity: 0.5
     });
 
-    const resp = await fetch("http://localhost:5000/movie_list", {
+    const resp3 = await fetch("http://localhost:5000/movie_list", {
       method: "POST",
       credentials: "include", //allows fetch to send cookie
       headers: {
@@ -189,16 +189,16 @@ export default {
       body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
     });
 
-    let responseData = await resp.json(responseData);
-    if (responseData.msg == "Token has expired") {
+let responseData2 = await resp3.json(responseData2);
+    if (responseData2.msg == "Token has expired") {
       $cookies.remove("access_token_cookie");
       $cookies.remove("csrf_access_token");
       this.$store.commit("setAuthStatus", false);
       this.$router.push("/login");
     }
-    console.log("CATEGORY LIST WHOLE", responseData);
+    console.log("CATEGORY LIST WHOLE", responseData2);
     loading.hide();
-    this.movieList = responseData.data.results;
+    this.movieList = responseData2.data.results;
     this.checkDuplicateMovie();
   },
   watch: {
