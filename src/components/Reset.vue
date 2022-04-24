@@ -1,11 +1,17 @@
 <template>
   <div>
-    <b-button variant="danger" @click="deleteSearchesPrelim"
+    <b-button id="tooltip-reset-searches" variant="danger" @click="deleteSearchesPrelim"
       >Reset Searches</b-button
     >
-    <b-button variant="danger" @click="deleteEverythingPrelim"
+    <b-tooltip target="tooltip-reset-searches" triggers="hover">
+      Resets only previously swiped movies and past searches! Your matches will remain saved.
+    </b-tooltip>
+    <b-button id="tooltip-reset-everything" variant="danger" @click="deleteEverythingPrelim"
       >Reset Everything</b-button
     >
+    <b-tooltip target="tooltip-reset-everything" triggers="hover">
+      Resets previously swiped movies, past searches and your matched movie list!
+    </b-tooltip>
 
     <b-modal
       id="reset-modal"
@@ -82,8 +88,8 @@ export default {
     async deleteEverythingFinal() {
       this.deleteSearches = false;
       this.deleteEverything = false;
-    this.$root.$emit("bv::hide::modal", "reset-modal");
-        let resp = await fetch("http://localhost:5000/delete_everything", {
+      this.$root.$emit("bv::hide::modal", "reset-modal");
+      let resp = await fetch("http://localhost:5000/delete_everything", {
         method: "DELETE",
         credentials: "include",
         headers: {
@@ -91,7 +97,7 @@ export default {
           "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
         }
       });
-        this.$store.commit("setUserMovieList", [])
+      this.$store.commit("setUserMovieList", []);
     },
     closeModal() {
       this.$root.$emit("bv::hide::modal", "reset-modal");
