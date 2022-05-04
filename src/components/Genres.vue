@@ -1,15 +1,17 @@
 <template>
   <div>
-    <div v-for="genre in genres" :key="genre.id">
+    <div cy-test="genre-button-container" >
       <!-- <router-link :to="{name: 'Movies', params: {genre: genre.id}}">{{genre.name}}</router-link> -->
-      <b-button
+      <b-button active
+      v-for="genre in genres" :key="genre.id"
         variant="secondary"
         :class="{ selected: genre.selected }"
+        style="display: block; margin:auto"
         @click="clickGenre(genre)"
         >{{ genre.name }}</b-button
       >
     </div>
-    <router-link to="/movies"><b-button variant="success">Submit</b-button></router-link> 
+    <router-link to="/movies"><b-button cy-test='genre-submit' variant="success">Submit</b-button></router-link> 
   </div>
 </template>
 
