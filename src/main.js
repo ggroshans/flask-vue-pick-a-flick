@@ -14,6 +14,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueLoading from 'vue-loading-overlay'
 import 'vue-loading-overlay/dist/vue-loading.css'
 
+import UUID from "vue-uuid";
+
 import {store} from './store/store'
 
 import VueCookies from 'vue-cookies'
@@ -23,6 +25,7 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(VueLoading)
+Vue.use(UUID)
 Vue.use(VueCookies)
 
 new Vue({

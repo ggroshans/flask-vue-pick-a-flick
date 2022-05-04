@@ -9,6 +9,7 @@
           ></span>
         </div>
         <input
+          cy-test="register-username"
           type="text"
           class="form-control"
           placeholder="username"
@@ -25,6 +26,7 @@
           ></span>
         </div>
         <input
+          cy-test="register-password"
           type="password"
           class="form-control"
           placeholder="password"
@@ -36,6 +38,7 @@
       </div> -->
       <div class="form-group">
         <button
+          cy-test="register-submit"
           @click.prevent="submitRegistration"
           type="submit"
           class="btn btn-primary float-right"
