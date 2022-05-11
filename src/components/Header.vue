@@ -24,6 +24,7 @@
     <b-button @click="logout" v-if="isLoggedIn"
       ><b-icon icon="door-open"></b-icon> Logout</b-button
     >
+    <b-button @click="darkMode">Dark Mode</b-button>
     <h1>Movie Date</h1>
   </div>
 </template>
@@ -48,6 +49,14 @@ export default {
       console.log(responseData);
       this.$router.push("/login");
       this.$store.commit("setAuthStatus", false);
+    },
+    darkMode() {
+      let bodyClassList = document.getElementsByTagName("body")[0].classList;
+      if (Array.from(bodyClassList).includes("dark")) {
+        bodyClassList.remove("dark");
+      } else {
+        bodyClassList.add("dark");
+      }
     }
   },
   computed: {
