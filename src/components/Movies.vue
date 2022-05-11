@@ -173,6 +173,14 @@ export default {
       },
       body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
     });
+    let responseData0 = await resp.json()
+    if (responseData0.msg != "success") {
+      console.log("LOGOUT TRIGGERED", responseData0, responseData0.msg)
+      $cookies.remove("access_token_cookie");
+      $cookies.remove("csrf_access_token");
+      this.$store.commit("setAuthStatus", false);
+      this.$router.push("/login");
+    }
 
     const resp2 = await fetch("http://localhost:5000/swiped", {
       method: "GET",

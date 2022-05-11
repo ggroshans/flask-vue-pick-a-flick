@@ -143,7 +143,7 @@ def register():
 
         db.session.add(user)
         db.session.commit()
-        return jsonify({"success": "User registered"})
+        return jsonify({"msg": "success"})
 
 
 @app.route("/logout", methods=["POST"])
@@ -185,7 +185,7 @@ def save_movie():
     movie = Movie(movie_data, movie_data['id'], user_obj.id)
     db.session.add(movie)
     db.session.commit()
-    return jsonify({"msg": "movie saved"})
+    return jsonify({"msg": "success"})
 
 
 @app.route("/delete_movie", methods=["DELETE"])
@@ -199,7 +199,7 @@ def delete_movie():
         user_id=user_obj.id, movie_id=movie_id).first()
     db.session.delete(matched_movie)
     db.session.commit()
-    return jsonify({"resp": "you hit delete route"})
+    return jsonify({"msg": "success"})
 
 
 @app.route("/genre_query", methods=["POST"])
@@ -220,7 +220,7 @@ def genre_query():
         db.session.add(genre_obj)
         db.session.commit()
 
-    return jsonify({"msg": "sucessful /genre_query"})
+    return jsonify({"msg": "success"})
 
 
 @app.route("/increment_page", methods=["POST"])
@@ -239,7 +239,7 @@ def increment_page():
     genre_obj = Genres.query.filter_by(user_id=user_obj.id, genres=genre_id_list).first()
     genre_obj.page_number += 1
     db.session.commit()
-    return jsonify({"msg": "successful update page number"})
+    return jsonify({"msg": "success"})
 
 @app.route("/user_movie_list")
 @jwt_required()
@@ -277,7 +277,7 @@ def swiped():
         db.session.add(swiped)
         db.session.commit()
 
-    return jsonify({'msg': ''})
+    return jsonify({'msg': 'success'})
 
 @app.route("/delete_searches", methods=["DELETE"])
 @jwt_required()
@@ -296,6 +296,7 @@ def delete_searches():
         db.session.commit()
 
     return ""
+    
 @app.route("/delete_everything", methods=["DELETE"])
 @jwt_required()
 def delete_everything():
