@@ -119,4 +119,8 @@ export default {
   position: relative;
   width: minmax(190px, 1fr);
 }
+
+.modal-body p {
+  color: black;
+}
 </style>
