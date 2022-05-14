@@ -24,8 +24,16 @@
     <b-button @click="logout" v-if="isLoggedIn"
       ><b-icon icon="door-open"></b-icon> Logout</b-button
     >
-
-  <b-form-checkbox  @change="darkMode" switch size="lg" variant="danger">Dark Mode</b-form-checkbox>
+    <div class="form-check form-switch d-flex justify-content-center">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="darkModeSwitch"
+        @change="darkMode"
+        :checked="isDarkMode"
+      />
+      <label class="form-check-label" for="darkModeSwitch">Dark Mode</label>
+    </div>
     <h1>Movie Date</h1>
   </div>
 </template>
@@ -52,11 +60,13 @@ export default {
       this.$store.commit("setAuthStatus", false);
     },
     darkMode() {
-      let bodyClassList = document.getElementsByTagName("body")[0].classList;
-      if (Array.from(bodyClassList).includes("dark")) {
-        bodyClassList.remove("dark");
+      let body = document.getElementsByTagName("body")[0];
+      if (Array.from(body.classList).includes("dark")) {
+        body.classList.remove("dark");
+        this.$store.commit("setDarkMode", false);
       } else {
-        bodyClassList.add("dark");
+        body.classList.add("dark");
+        this.$store.commit("setDarkMode", true);
       }
     }
   },
@@ -64,6 +74,18 @@ export default {
     isLoggedIn() {
       console.log(this.$store.getters.getAuthStatus);
       return this.$store.getters.getAuthStatus;
+    },
+    isDarkMode() {
+      return this.$store.getters.getDarkMode;
+    }
+  },
+  created() {
+    let body = document.getElementsByTagName("body")[0];
+    let darkModeStatus = this.isDarkMode;
+    if (darkModeStatus) {
+      body.classList.add("dark");
+    } else {
+      body.classList.remove("dark");
     }
   }
 };
@@ -71,7 +93,7 @@ export default {
 
 <style scoped>
 h1 {
-  font-family: "Lobster Two", cursive;
+  font-family: "Lobster";
   font-size: 4.5rem;
 }
 </style>

@@ -13,10 +13,10 @@ const vuexLocal = new VuexPersistence({
 export const store = new Vuex.Store({
     state: {
         currentMovieObj: {},
-        token: null,
         authStatus: false,
         genresQuery: {},
         userMovieList: {},
+        darkMode: false,
     },
     getters: {
         getCurrentMovie (state) {
@@ -30,6 +30,9 @@ export const store = new Vuex.Store({
         },
         getUserMovieList (state) {
             return state.userMovieList;
+        },
+        getDarkMode (state) {
+            return state.darkMode;
         }
     },
     mutations: {
@@ -44,6 +47,9 @@ export const store = new Vuex.Store({
         },
         setUserMovieList(state, array) {
             state.userMovieList = array;
+        },
+        setDarkMode(state, status){
+            state.darkMode = status;
         }
 
     },

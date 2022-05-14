@@ -276,8 +276,6 @@ li {
 .card-container {
   display: flex;
   justify-content: center;
-
-  height: 100vh;
 }
 
 .rounded-borders {
@@ -288,6 +286,7 @@ li {
   width: 300px;
   height: 400px;
   color: white;
+  text-align: left;
 }
 
 .movie-info {
