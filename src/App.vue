@@ -1,37 +1,41 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ filter: darkMode }">
     <Header></Header>
     <h1></h1>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue'
+import Header from "./components/Header.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Header, 
+    Header
+  },
+  computed: {
+    darkMode() {
+      return this.$store.getters.getDarkMode;
+    }
   }
-}
+};
 </script>
 
 <style>
-
-@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Limelight&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import './styles/loading.css';
-
+@import url("https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Limelight&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+@import "./styles/loading.css";
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  margin-top: 60px;
 }
-
-body{
-  background-color: var(--background-color-primary);
+.filter {
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 2 !important;
 }
 </style>

@@ -25,7 +25,7 @@
       ><b-icon icon="door-open"></b-icon> Logout</b-button
     >
 
-  <b-form-checkbox  @change="darkMode" switch size="lg" variant="danger">Dark Mode</b-form-checkbox>
+  <b-form-checkbox  @change="darkMode" switch size="lg" variant="danger" :checked="isDarkMode">Dark Mode</b-form-checkbox>
     <h1>Movie Date</h1>
   </div>
 </template>
@@ -52,11 +52,13 @@ export default {
       this.$store.commit("setAuthStatus", false);
     },
     darkMode() {
-      let bodyClassList = document.getElementsByTagName("body")[0].classList;
-      if (Array.from(bodyClassList).includes("dark")) {
-        bodyClassList.remove("dark");
+      let body = document.getElementsByTagName("body")[0];
+      if (Array.from(body.classList).includes("dark")) {
+        body.classList.remove("dark");
+        this.$store.commit("setDarkMode", false);
       } else {
-        bodyClassList.add("dark");
+        body.classList.add("dark");
+        this.$store.commit("setDarkMode", true);
       }
     }
   },
@@ -64,6 +66,18 @@ export default {
     isLoggedIn() {
       console.log(this.$store.getters.getAuthStatus);
       return this.$store.getters.getAuthStatus;
+    },
+    isDarkMode() {
+      return this.$store.getters.getDarkMode;
+    }
+  },
+  created() {
+    let body = document.getElementsByTagName("body")[0];
+    let darkModeStatus = this.isDarkMode;
+    if (darkModeStatus) {
+      body.classList.add("dark");
+    } else {
+      body.classList.remove("dark");
     }
   }
 };
