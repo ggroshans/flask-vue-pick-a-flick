@@ -1,6 +1,16 @@
+body {
+  height: 100vh;
+  background-image: url("../images/lighttheme.jpg");
+  background-size:cover;
+  /* background-repeat: no-repeat; */
+  color: beige;
+  z-index: 0 !important;
+}
 
-
-  .dark {
-      background-color: #333333;
-      color: yellow;
-  }
+.dark {
+  position: relative;
+  background-image: url("../images/darktheme3.jpg");
+  color: beige;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
