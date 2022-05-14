@@ -24,16 +24,8 @@
     <b-button @click="logout" v-if="isLoggedIn"
       ><b-icon icon="door-open"></b-icon> Logout</b-button
     >
-    <div class="form-check form-switch d-flex justify-content-center">
-      <input
-        class="form-check-input"
-        type="checkbox"
-        id="darkModeSwitch"
-        @change="darkMode"
-        :checked="isDarkMode"
-      />
-      <label class="form-check-label" for="darkModeSwitch">Dark Mode</label>
-    </div>
+
+  <b-form-checkbox  @change="darkMode" switch size="lg" variant="danger" :checked="isDarkMode">Dark Mode</b-form-checkbox>
     <h1>Movie Date</h1>
   </div>
 </template>
