@@ -1,11 +1,5 @@
 <template>
   <div>
-    <h2>
-      Currently Selection:
-      <span v-for="genreObj in currentGenres" :key="genreObj.id">
-        {{ genreObj.name }}
-      </span>
-    </h2>
     <section v-if="movieList[0]" class="card-container">
       <div
         class="flex justify-content-center align-items-center"
@@ -21,6 +15,11 @@
           @draggedRight="swipedRight"
           @draggedLeft="swipedLeft"
         >
+          <div class="genre-pill-container">
+            <b-badge pill variant="dark" v-for="genreObj in currentGenres" :key="genreObj.id" class="genre-pill">
+              {{ genreObj.name }}
+            </b-badge>
+          </div>
           <div class="movie-info">
             <p>{{ movieList[0].overview }}</p>
           </div>
@@ -173,9 +172,9 @@ export default {
       },
       body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
     });
-    let responseData0 = await resp.json()
+    let responseData0 = await resp.json();
     if (responseData0.msg != "success") {
-      console.log("LOGOUT TRIGGERED", responseData0, responseData0.msg)
+      console.log("LOGOUT TRIGGERED", responseData0, responseData0.msg);
       $cookies.remove("access_token_cookie");
       $cookies.remove("csrf_access_token");
       this.$store.commit("setAuthStatus", false);
@@ -276,7 +275,7 @@ li {
 .card-container {
   display: flex;
   justify-content: center;
-}
+  }
 
 .rounded-borders {
   border-radius: 12px;
@@ -287,6 +286,9 @@ li {
   height: 400px;
   color: white;
   text-align: left;
+  background-color: beige;
+  border: 1px solid black;
+
 }
 
 .movie-info {
@@ -297,7 +299,25 @@ li {
   width: 100%;
   padding: 1rem;
   color: black;
+  overflow: scroll;
+  padding-top: 1rem;
 }
+
+.movie-info > p {
+  margin-top: 3rem;
+}
+
+.genre-pill-container {
+  padding-bottom: 1rem;
+}
+
+.genre-pill {
+  padding-top: 6px;
+  margin-top: 0.5rem;
+  margin-left: .25rem;;
+  background-color: gray;
+}
+
 >>> .modal-dialog {
   max-width: 400px;
 }
