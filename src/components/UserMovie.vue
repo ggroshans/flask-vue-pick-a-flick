@@ -50,13 +50,19 @@ img {
   position: absolute;
   right: 10px;
   top: 5px;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   color: lightgray;
-  transition: all 1s;
+  background-color: tomato;
+  opacity: 0.65;
+  transition: all .5s ease;
+  border: 1px solid gray;
+  border-radius: 4px;
 }
 
 .close-icon:hover {
   color: tomato;
-  font-size: 1.35rem;
+  border: 1px solid white;
+  opacity: 1;
+  background-color: white;
 }
 </style>
