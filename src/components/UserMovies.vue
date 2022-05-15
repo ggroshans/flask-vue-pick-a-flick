@@ -116,8 +116,11 @@ export default {
   gap: 1rem;
 }
 .movie-grid-item {
+  cursor: pointer;
   position: relative;
   width: minmax(190px, 1fr);
+  border: 2px solid beige;
+  border-radius: 10px;
 }
 
 .modal-body p {
