@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header-container">
     <router-link
       to="/movies"
       v-if="
@@ -9,7 +9,7 @@
           !(this.$route.name == 'EmptyStack')
       "
       ><b-button
-        ><b-icon icon="arrow-left"></b-icon> Back to Current Search</b-button
+        ><b-icon icon="arrow-left"></b-icon> Back to Search</b-button
       >
     </router-link>
     <router-link
@@ -26,6 +26,31 @@
     >
 
   <b-form-checkbox  @change="darkMode" switch size="lg" variant="danger" :checked="isDarkMode">Dark Mode</b-form-checkbox>
+
+
+<div>
+  <b-navbar type="dark" variant="dark">
+    <b-navbar-nav>
+      <b-nav-item href="#">Home</b-nav-item>
+
+      <!-- Navbar dropdowns -->
+      <b-nav-item-dropdown text="Lang" right>
+        <b-dropdown-item href="#">EN</b-dropdown-item>
+        <b-dropdown-item href="#">ES</b-dropdown-item>
+        <b-dropdown-item href="#">RU</b-dropdown-item>
+        <b-dropdown-item href="#">FA</b-dropdown-item>
+      </b-nav-item-dropdown>
+
+      <b-nav-item-dropdown text="User" right>
+        <b-dropdown-item href="#">Account</b-dropdown-item>
+        <b-dropdown-item href="#">Settings</b-dropdown-item>
+      </b-nav-item-dropdown>
+    </b-navbar-nav>
+  </b-navbar>
+</div>
+
+
+
     <h1>Movie Date</h1>
   </div>
 </template>
@@ -87,5 +112,9 @@ export default {
 h1 {
   font-family: "Lobster";
   font-size: 4.5rem;
+}
+
+.header-container {
+  margin-top: 1rem;
 }
 </style>

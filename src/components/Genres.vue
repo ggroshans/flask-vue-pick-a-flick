@@ -159,8 +159,9 @@ export default {
 
 <style scoped>
 .selected {
-  background-color: rgb(2, 170, 170);
+  background-color: darkgoldenrod;
   color: white;
+  border: 1px solid white;
 }
 
 .genre-pill-container {

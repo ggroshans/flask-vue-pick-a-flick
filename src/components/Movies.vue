@@ -294,7 +294,7 @@ li {
 .movie-info {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   height: 100%;
   width: 100%;
   padding: 1rem;
@@ -304,7 +304,7 @@ li {
 }
 
 .movie-info > p {
-  margin-top: 3rem;
+  margin-top: 1rem;
 }
 
 .genre-pill-container {

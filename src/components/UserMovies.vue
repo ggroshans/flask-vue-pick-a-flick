@@ -108,19 +108,21 @@ export default {
 .movie-grid-container {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
   justify-content: center;
   justify-items: center;
   align-items: center;
   align-content: center;
-  gap: 1rem;
+  gap: 1.5rem;
+  max-width: 1100px;
+  margin: auto;
 }
 .movie-grid-item {
   cursor: pointer;
   position: relative;
   width: minmax(190px, 1fr);
-  border: 2px solid beige;
-  border-radius: 10px;
+  border: 1px solid beige;
+  border-radius: 9px;
 }
 
 .modal-body p {
