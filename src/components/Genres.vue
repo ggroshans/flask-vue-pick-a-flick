@@ -1,17 +1,25 @@
 <template>
   <div>
-    <div cy-test="genre-button-container" >
-      <!-- <router-link :to="{name: 'Movies', params: {genre: genre.id}}">{{genre.name}}</router-link> -->
-      <b-button active
-      v-for="genre in genres" :key="genre.id"
-        variant="secondary"
+    <div cy-test="genre-pill-container" class="genre-pill-container">
+      <b-badge
+        pill
+        v-for="genre in genres"
+        :key="genre.id"
+        variant="outline-primary"
         :class="{ selected: genre.selected }"
-        style="display: block; margin:auto"
+        class="genre-pill"
         @click="clickGenre(genre)"
-        >{{ genre.name }}</b-button
+        >{{ genre.name }}</b-badge
       >
     </div>
-    <router-link to="/movies"><b-button cy-test='genre-submit' variant="success">Submit</b-button></router-link> 
+    <router-link to="/movies"
+      ><b-button
+        cy-test="genre-submit"
+        variant="success"
+        class="submit-genres-btn"
+        >Confirm Genres</b-button
+      ></router-link
+    >
   </div>
 </template>
 
@@ -126,13 +134,13 @@ export default {
       if (genre.selected == false) {
         let index = this.selectedGenres.findIndex(obj => obj.id == genre.id);
         this.selectedGenres.splice(index, 1);
-        this.$store.commit("setGenresQuery", this.selectedGenres)
+        this.$store.commit("setGenresQuery", this.selectedGenres);
       } else {
-        let genreObj = {}
-        genreObj['name'] = genre.name;
-        genreObj['id'] = genre.id;
+        let genreObj = {};
+        genreObj["name"] = genre.name;
+        genreObj["id"] = genre.id;
         this.selectedGenres.push(genreObj);
-        this.$store.commit("setGenresQuery", this.selectedGenres)
+        this.$store.commit("setGenresQuery", this.selectedGenres);
       }
     }
   },
@@ -151,7 +159,38 @@ export default {
 
 <style scoped>
 .selected {
-  background-color: #007bff;
+  background-color: rgb(2, 170, 170);
   color: white;
+}
+
+.genre-pill-container {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 350px;
+}
+
+.genre-pill {
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 8px 10px 5px 10px;
+  margin: 8px;
+  display: inline-block;
+  transition: all 0.8s ease;
+  letter-spacing: 0.05rem;
+}
+
+.genre-pill:hover {
+  color: beige;
+  box-shadow: 0 0 10px goldenrod;
+  text-shadow: 0 0 5px yellow;
+}
+
+.submit-genres-btn {
+  margin-top: 2rem;
+  font-weight: 800;
 }
 </style>
