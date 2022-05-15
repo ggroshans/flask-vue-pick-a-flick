@@ -2,15 +2,16 @@ body {
   height: 100vh;
   background-image: url("../images/lighttheme.jpg");
   background-size:cover;
-  /* background-repeat: no-repeat; */
+  background-attachment: fixed;
   color: beige;
   z-index: 0 !important;
 }
 
 .dark {
   position: relative;
-  background-image: url("../images/darktheme3.jpg");
+  background-image: url("../images/darktheme.jpg");
   color: beige;
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
