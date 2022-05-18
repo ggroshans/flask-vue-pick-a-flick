@@ -3,23 +3,34 @@
     <div>
       <b-navbar type="dark" variant="dark">
         <b-navbar-nav>
-          <b-nav-item href="#">
-            <router-link
-              to="/movies"
-              v-if="
-                isLoggedIn &&
-                !(this.$route.name == 'Movies') &&
-                !(this.$route.name == 'Genres') &&
-                !(this.$route.name == 'EmptyStack')
-              "
+          <b-nav-item
+            href="#"
+            class="nav-item-container"
+            v-if="
+              isLoggedIn &&
+              !(this.$route.name == 'Movies') &&
+              !(this.$route.name == 'Genres') &&
+              !(this.$route.name == 'EmptyStack')
+            "
+          >
+            <router-link to="/movies" class="nav-router-link"
               ><b-icon icon="arrow-left"></b-icon> Back to Search
             </router-link>
           </b-nav-item>
-          <b-nav-item>
-            <router-link
-              to="/genres"
-              v-if="isLoggedIn && !(this.$route.name == 'Genres')"
+          <b-nav-item
+            class="nav-item-container"
+            v-if="isLoggedIn && !(this.$route.name == 'Genres')"
+          >
+            <router-link to="/genres" class="nav-router-link"
               ><b-icon icon="plus"></b-icon> New Search
+            </router-link>
+          </b-nav-item>
+          <b-nav-item
+            class="nav-item-container"
+            v-if="isLoggedIn && !(this.$route.name == 'Genres')"
+          >
+            <router-link class="nav-router-link" to="/user/profile"
+              ><b-icon icon="list"></b-icon> Your Movies
             </router-link>
           </b-nav-item>
         </b-navbar-nav>
@@ -43,12 +54,8 @@
             text="User"
             right
             class="user-dropdown"
+            icon="person-fill"
           >
-            <b-dropdown-item href="#">
-              <router-link to="/user/profile" v-if="isLoggedIn"
-                ><b-icon icon="person-fill"></b-icon> Profile
-              </router-link>
-            </b-dropdown-item>
             <b-dropdown-item href="#">
               <a @click="logout" v-if="isLoggedIn"
                 ><b-icon icon="door-open"></b-icon> Logout</a
@@ -136,5 +143,15 @@ h1 {
 
 .moon-icon {
   color: teal;
+}
+
+.nav-item-container {
+  border-right: 1px solid gray;
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}
+
+.nav-router-link {
+  color: white;
 }
 </style>
