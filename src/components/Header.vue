@@ -1,43 +1,7 @@
 <template>
   <div class="header-container">
-    <!-- <router-link
-      to="/movies"
-      v-if="
-        isLoggedIn &&
-        !(this.$route.name == 'Movies') &&
-        !(this.$route.name == 'Genres') &&
-        !(this.$route.name == 'EmptyStack')
-      "
-      ><b-button><b-icon icon="arrow-left"></b-icon> Back to Search</b-button>
-    </router-link>
-    <router-link
-      to="/genres"
-      v-if="isLoggedIn && !(this.$route.name == 'Genres')"
-      ><b-button><b-icon icon="plus"></b-icon> New Search</b-button>
-    </router-link>
-    <router-link to="/user/profile" v-if="isLoggedIn"
-      ><b-button><b-icon icon="person-fill"></b-icon> Profile</b-button>
-    </router-link>
-
-    <b-button @click="logout" v-if="isLoggedIn"
-      ><b-icon icon="door-open"></b-icon> Logout</b-button
-    >
-
-    <b-form-checkbox
-      @change="darkMode"
-      switch
-      size="lg"
-      variant="danger"
-      :checked="isDarkMode"
-      >Dark Mode</b-form-checkbox
-    > -->
-
     <div>
-      <b-navbar
-        type="dark"
-        variant="dark"
-        class="d-flex justify-content-center"
-      >
+      <b-navbar type="dark" variant="dark">
         <b-navbar-nav>
           <b-nav-item href="#">
             <router-link
@@ -58,8 +22,28 @@
               ><b-icon icon="plus"></b-icon> New Search
             </router-link>
           </b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto">
+          <div class="d-flex justify-content-center align-items-center mr-4">
+            <div>
+              <b-form-checkbox
+                @change="darkMode"
+                switch
+                size="lg"
+                :checked="isDarkMode"
+                class="mb-1"
+              ></b-form-checkbox>
+            </div>
+            <b-icon v-if="!isDarkMode" icon="sun" class="sun-icon"></b-icon>
+            <b-icon v-if="isDarkMode" icon="moon" class="moon-icon"></b-icon>
+          </div>
 
-          <b-nav-item-dropdown text="User" right>
+          <b-nav-item-dropdown
+            v-if="isLoggedIn"
+            text="User"
+            right
+            class="user-dropdown"
+          >
             <b-dropdown-item href="#">
               <router-link to="/user/profile" v-if="isLoggedIn"
                 ><b-icon icon="person-fill"></b-icon> Profile
@@ -71,28 +55,6 @@
               >
             </b-dropdown-item>
           </b-nav-item-dropdown>
-
-        <b-nav-item>
-
-        </b-nav-item>
-        <b-nav-item></b-nav-item>
-
-
-        <div class="d-flex justify-content-center align-items-center position-relative">
-          <b-form-checkbox
-            @change="darkMode"
-            switch
-            size="lg"
-            :checked="isDarkMode"
-            class="mb-1"
-            ></b-form-checkbox
-          >
-          <b-icon v-if="!isDarkMode" icon="sun" class="sun-icon"></b-icon>
-          <b-icon v-if="isDarkMode" icon="moon" class="moon-icon"></b-icon>
-        </div>
-
-
-
         </b-navbar-nav>
       </b-navbar>
     </div>
@@ -155,9 +117,17 @@ export default {
 </script>
 
 <style scoped>
+.header-container {
+  opacity: 0.75;
+}
+
 h1 {
   font-family: "Lobster";
   font-size: 4.5rem;
+}
+
+.user-dropdown {
+  margin-left: auto;
 }
 
 .sun-icon {
@@ -167,5 +137,4 @@ h1 {
 .moon-icon {
   color: teal;
 }
-
 </style>
