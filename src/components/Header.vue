@@ -73,19 +73,22 @@
           </b-nav-item-dropdown>
 
         <b-nav-item>
-          
+
         </b-nav-item>
-        <div>
-          <b-icon icon="sun"></b-icon>
+        <b-nav-item></b-nav-item>
+
+
+        <div class="d-flex justify-content-center align-items-center position-relative">
           <b-form-checkbox
             @change="darkMode"
             switch
             size="lg"
-            variant="danger"
             :checked="isDarkMode"
+            class="mb-1"
             ></b-form-checkbox
           >
-          <b-icon icon="moon"></b-icon>
+          <b-icon v-if="!isDarkMode" icon="sun" class="sun-icon"></b-icon>
+          <b-icon v-if="isDarkMode" icon="moon" class="moon-icon"></b-icon>
         </div>
 
 
@@ -155,6 +158,14 @@ export default {
 h1 {
   font-family: "Lobster";
   font-size: 4.5rem;
+}
+
+.sun-icon {
+  color: orange;
+}
+
+.moon-icon {
+  color: teal;
 }
 
 </style>
