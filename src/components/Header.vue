@@ -1,16 +1,14 @@
 <template>
   <div class="header-container">
-    <router-link
+    <!-- <router-link
       to="/movies"
       v-if="
         isLoggedIn &&
-          !(this.$route.name == 'Movies') &&
-          !(this.$route.name == 'Genres') &&
-          !(this.$route.name == 'EmptyStack')
+        !(this.$route.name == 'Movies') &&
+        !(this.$route.name == 'Genres') &&
+        !(this.$route.name == 'EmptyStack')
       "
-      ><b-button
-        ><b-icon icon="arrow-left"></b-icon> Back to Search</b-button
-      >
+      ><b-button><b-icon icon="arrow-left"></b-icon> Back to Search</b-button>
     </router-link>
     <router-link
       to="/genres"
@@ -25,31 +23,76 @@
       ><b-icon icon="door-open"></b-icon> Logout</b-button
     >
 
-  <b-form-checkbox  @change="darkMode" switch size="lg" variant="danger" :checked="isDarkMode">Dark Mode</b-form-checkbox>
+    <b-form-checkbox
+      @change="darkMode"
+      switch
+      size="lg"
+      variant="danger"
+      :checked="isDarkMode"
+      >Dark Mode</b-form-checkbox
+    > -->
+
+    <div>
+      <b-navbar
+        type="dark"
+        variant="dark"
+        class="d-flex justify-content-center"
+      >
+        <b-navbar-nav>
+          <b-nav-item href="#">
+            <router-link
+              to="/movies"
+              v-if="
+                isLoggedIn &&
+                !(this.$route.name == 'Movies') &&
+                !(this.$route.name == 'Genres') &&
+                !(this.$route.name == 'EmptyStack')
+              "
+              ><b-icon icon="arrow-left"></b-icon> Back to Search
+            </router-link>
+          </b-nav-item>
+          <b-nav-item>
+            <router-link
+              to="/genres"
+              v-if="isLoggedIn && !(this.$route.name == 'Genres')"
+              ><b-icon icon="plus"></b-icon> New Search
+            </router-link>
+          </b-nav-item>
+
+          <b-nav-item-dropdown text="User" right>
+            <b-dropdown-item href="#">
+              <router-link to="/user/profile" v-if="isLoggedIn"
+                ><b-icon icon="person-fill"></b-icon> Profile
+              </router-link>
+            </b-dropdown-item>
+            <b-dropdown-item href="#">
+              <a @click="logout" v-if="isLoggedIn"
+                ><b-icon icon="door-open"></b-icon> Logout</a
+              >
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+
+        <b-nav-item>
+          
+        </b-nav-item>
+        <div>
+          <b-icon icon="sun"></b-icon>
+          <b-form-checkbox
+            @change="darkMode"
+            switch
+            size="lg"
+            variant="danger"
+            :checked="isDarkMode"
+            ></b-form-checkbox
+          >
+          <b-icon icon="moon"></b-icon>
+        </div>
 
 
-<div>
-  <b-navbar type="dark" variant="dark">
-    <b-navbar-nav>
-      <b-nav-item href="#">Home</b-nav-item>
 
-      <!-- Navbar dropdowns -->
-      <b-nav-item-dropdown text="Lang" right>
-        <b-dropdown-item href="#">EN</b-dropdown-item>
-        <b-dropdown-item href="#">ES</b-dropdown-item>
-        <b-dropdown-item href="#">RU</b-dropdown-item>
-        <b-dropdown-item href="#">FA</b-dropdown-item>
-      </b-nav-item-dropdown>
-
-      <b-nav-item-dropdown text="User" right>
-        <b-dropdown-item href="#">Account</b-dropdown-item>
-        <b-dropdown-item href="#">Settings</b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-navbar-nav>
-  </b-navbar>
-</div>
-
-
+        </b-navbar-nav>
+      </b-navbar>
+    </div>
 
     <h1>Movie Date</h1>
   </div>
@@ -67,8 +110,8 @@ export default {
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-TOKEN": $cookies.get("csrf_access_token")
-        }
+          "X-CSRF-TOKEN": $cookies.get("csrf_access_token"),
+        },
       });
       const responseData = await resp.json();
       $cookies.remove("csrf_access_token");
@@ -85,7 +128,7 @@ export default {
         body.classList.add("dark");
         this.$store.commit("setDarkMode", true);
       }
-    }
+    },
   },
   computed: {
     isLoggedIn() {
@@ -94,7 +137,7 @@ export default {
     },
     isDarkMode() {
       return this.$store.getters.getDarkMode;
-    }
+    },
   },
   created() {
     let body = document.getElementsByTagName("body")[0];
@@ -104,7 +147,7 @@ export default {
     } else {
       body.classList.remove("dark");
     }
-  }
+  },
 };
 </script>
 
@@ -114,7 +157,4 @@ h1 {
   font-size: 4.5rem;
 }
 
-.header-container {
-  margin-top: 1rem;
-}
 </style>
