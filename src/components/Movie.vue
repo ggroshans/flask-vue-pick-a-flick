@@ -6,18 +6,27 @@
           :src="'https://image.tmdb.org/t/p/w500' + getCurrentMovie.poster_path"
         />
       </div>
-      <div class="col">
+      <div class="col movie-details-container">
         <h2>Movie Title</h2>
-        <p>{{getCurrentMovie.title}}</p>
+        <p>{{ getCurrentMovie.title }}</p>
         <h2>Release Date</h2>
-        <p>{{getCurrentMovie.release_date}}</p>
+        <p>{{ getCurrentMovie.release_date }}</p>
         <h2>Overview</h2>
-        <p>{{getCurrentMovie.overview}}</p>
+        <p>{{ getCurrentMovie.overview }}</p>
         <h2>Genre:</h2>
-        <p>{{genreNames(getCurrentMovie.genre_ids)}}</p>
+        <p>{{ genreNames(getCurrentMovie.genre_ids) }}</p>
+        <h2>Popularity:</h2>
+        <div class="progress-bar-container">
+          <div class="progress-bar" :style="{height: 25 + 'px', width: generatePopularityBar() + 'px', color: 'green' }"></div>
+        </div>
         <h2>Where can I watch?</h2>
         <p>
-          <a :href="'https://www.justwatch.com/us/search?q=' + getCurrentMovie.title">Streaming availability</a>
+          <a
+            :href="
+              'https://www.justwatch.com/us/search?q=' + getCurrentMovie.title
+            "
+            >Streaming availability</a
+          >
         </p>
       </div>
     </div>
@@ -104,19 +113,24 @@ export default {
         },
         {
           id: 37,
-          name: "Western"
-        }
+          name: "Western",
+        },
       ],
     };
   },
   methods: {
     genreNames(genreIdArray) {
-      let genreNames = []
-      genreIdArray.forEach(genreId => {
-        let index = this.genres.findIndex(obj => obj.id == genreId) 
-        genreNames.push(this.genres[index].name)
-      })
+      let genreNames = [];
+      genreIdArray.forEach((genreId) => {
+        let index = this.genres.findIndex((obj) => obj.id == genreId);
+        genreNames.push(this.genres[index].name);
+      });
       return genreNames.join(", ");
+    },
+    generatePopularityBar() {
+      let percentage = ((this.getCurrentMovie.vote_average * 10) / 100) * 500;
+      console.log(percentage)
+      return percentage;
     }
   },
   computed: {
@@ -124,9 +138,24 @@ export default {
       console.log(this.$store.getters.getCurrentMovie);
       console.log(this.$store);
       return this.$store.getters.getCurrentMovie;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.movie-details-container {
+  text-align: left;
+}
+
+.progress-bar-container {
+  background-color: lightgray;
+  height: 25px;
+  width: 500px;
+}
+
+.progress-bar {
+  background-color: green;
+}
+
+</style>
