@@ -73,9 +73,7 @@
 <script>
 export default {
   data() {
-    return {
-      currentRoute: "",
-    };
+    return {};
   },
   methods: {
     async logout() {
@@ -95,16 +93,11 @@ export default {
     },
     darkMode() {
       let body = document.getElementsByTagName("body")[0];
-      if (this.$route.name == "Splash") {
+      if (Array.from(body.classList).includes("dark")) {
         body.classList.remove("dark");
-        body.classList.add("splash");
-      } else if (Array.from(body.classList).includes("dark")) {
-        body.classList.remove("dark");
-        body.classList.remove("splash");
         this.$store.commit("setDarkMode", false);
       } else {
         body.classList.add("dark");
-        body.classList.remove("splash");
         this.$store.commit("setDarkMode", true);
       }
     },
@@ -118,17 +111,7 @@ export default {
       return this.$store.getters.getDarkMode;
     },
   },
-  watch: {
-    currentRoute: function() {
-      if (this.$route.name == "Splash") {
-        console.log("Watch fired")
-        body.classList.remove("dark");
-        body.classList.add("splash");
-      }
-    },
-  },
   created() {
-    this.isSplashScreen;
     let body = document.getElementsByTagName("body")[0];
     let darkModeStatus = this.isDarkMode;
     if (darkModeStatus) {
