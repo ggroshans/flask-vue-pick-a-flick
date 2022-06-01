@@ -43,6 +43,7 @@
 
 <script>
 import UserMovie from "./UserMovie.vue";
+import requestPath from '../fetchUtility';
 export default {
   data() {
     return {
@@ -60,7 +61,7 @@ export default {
       this.movies.splice(index, 1);
       this.$root.$emit("bv::hide::modal", "delete-modal");
 
-      let resp = await fetch("http://localhost:5000/delete_movie", {
+      let resp = await fetch(requestPath("delete_movie"), {
         method: "DELETE",
         credentials: "include",
         headers: {
@@ -82,7 +83,7 @@ export default {
     } 
   },
   async created() {
-    let resp = await fetch("http://localhost:5000/user_movie_list", {
+    let resp = await fetch(requestPath("user_movie_list"), {
       method: "GET",
       credentials: "include",
       headers: {

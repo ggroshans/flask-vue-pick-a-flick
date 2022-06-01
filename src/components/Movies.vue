@@ -68,6 +68,7 @@
 <script>
 /* eslint-disable */
 import { Vue2InteractDraggable } from "vue2-interact";
+import requestPath from '../fetchUtility';
 export default {
   data() {
     return {
@@ -117,7 +118,7 @@ export default {
       });
     },
     saveMovie() {
-      const resp = fetch("http://localhost:5000/save_movie", {
+      const resp = fetch(requestPath("save_movie"), {
         method: "POST",
         credentials: "include",
         headers: {
@@ -128,7 +129,7 @@ export default {
       });
     },
     addSwipedId() {
-      let resp = fetch("http://localhost:5000/swiped", {
+      let resp = fetch(requestPath("swiped"), {
         method: "POST",
         credentials: "include",
         headers: {
@@ -163,7 +164,7 @@ export default {
     }
   },
   async beforeCreate() {
-    const resp = await fetch("http://localhost:5000/genre_query", {
+    const resp = await fetch(requestPath("genre_query"), {
       method: "POST",
       credentials: "include",
       headers: {
@@ -181,7 +182,7 @@ export default {
       this.$router.push("/login");
     }
 
-    const resp2 = await fetch("http://localhost:5000/swiped", {
+    const resp2 = await fetch(requestPath("swiped"), {
       method: "GET",
       credentials: "include",
       headers: {
@@ -199,7 +200,7 @@ export default {
       opacity: 0.5
     });
 
-    const resp3 = await fetch("http://localhost:5000/movie_list", {
+    const resp3 = await fetch(requestPath("movie_list"), {
       method: "POST",
       credentials: "include", //allows fetch to send cookie
       headers: {
@@ -224,7 +225,7 @@ export default {
   watch: {
     movieList: async function getMoreMovies() {
       if (this.movieList.length <= 10 && this.fetchMoreMovies) {
-        const resp1 = await fetch("http://localhost:5000/increment_page", {
+        const resp1 = await fetch(requestPath("increment_page"), {
           method: "POST",
           credentials: "include",
           headers: {
@@ -233,7 +234,7 @@ export default {
           },
           body: JSON.stringify({ genres: this.$store.getters.getGenresQuery })
         });
-        const resp2 = await fetch("http://localhost:5000/movie_list", {
+        const resp2 = await fetch(requestPath("movie_list"), {
           method: "POST",
           credentials: "include", //allows fetch to send cookie
           headers: {

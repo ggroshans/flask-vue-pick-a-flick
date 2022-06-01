@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import requestPath from '../fetchUtility';
 export default {
   data() {
     return {
@@ -75,7 +76,7 @@ export default {
     async deleteSearchesFinal() {
       this.deleteEverything = false;
       this.deleteSearches = false;
-      let resp = await fetch("http://localhost:5000/delete_searches", {
+      let resp = await fetch(requestPath("delete_searches"), {
         method: "DELETE",
         credentials: "include",
         headers: {
@@ -89,7 +90,7 @@ export default {
       this.deleteSearches = false;
       this.deleteEverything = false;
       this.$root.$emit("bv::hide::modal", "reset-modal");
-      let resp = await fetch("http://localhost:5000/delete_everything", {
+      let resp = await fetch(requestPath("delete_everything"), {
         method: "DELETE",
         credentials: "include",
         headers: {

@@ -60,6 +60,7 @@
 <script>
 /* eslint-disable */
 import router from '../../router'
+import requestPath from '../../fetchUtility';
 export default {
   data() {
     return {
@@ -71,7 +72,7 @@ export default {
   methods: {
     async submitRegistration() {
       console.log("fired");
-      const resp = await fetch("http://localhost:5000/register", {
+      const resp = await fetch(requestPath('register'), {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

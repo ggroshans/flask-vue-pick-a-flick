@@ -71,13 +71,15 @@
 </template>
 
 <script>
+
+import requestPath from '../fetchUtility';
 export default {
   data() {
     return {};
   },
   methods: {
     async logout() {
-      const resp = await fetch("http://localhost:5000/logout", {
+      const resp = await fetch(requestPath("logout"), {
         method: "POST",
         credentials: "include",
         headers: {

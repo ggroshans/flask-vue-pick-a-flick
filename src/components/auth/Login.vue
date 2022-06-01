@@ -62,6 +62,7 @@
 <script>
 /* eslint-disable */
 import router from '../../router'
+import requestPath from '../../fetchUtility';
 export default {
   data() {
     return {
@@ -74,7 +75,7 @@ export default {
   methods: {
     async submitLogin() {
       console.log("fired");
-      const resp = await fetch("http://localhost:5000/login", {
+      const resp = await fetch(requestPath('login'), {
         method: "POST",
         credentials: 'include', //allows fetch to send cookie
         headers: {
