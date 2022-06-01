@@ -1,4 +1,4 @@
 
 export default function requestPath(path) {
-    return `http://LOCALHOST:5000/${path}`
+    return `${window.movie_date_api_root}/${path}`
 }
