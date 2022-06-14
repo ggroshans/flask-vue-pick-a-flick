@@ -1,0 +1,29 @@
+FROM python:3.8-slim-buster as base
+RUN useradd -ms /bin/bash webuser -d /app
+RUN pip install pipenv
+ENV PATH="/app/.venv/bin:$PATH"
+ENV PYTHONPATH=/app:/app/.venv/lib/python3.8/site-packages
+ENV PIPENV_VENV_IN_PROJECT="enabled"
+RUN mkdir -p /app/.venv
+RUN chown webuser:webuser /app -R
+
+FROM base as build
+RUN apt-get update -yy && apt-get -yy install build-essential
+USER webuser
+COPY api /app/
+
+WORKDIR /app
+
+RUN pipenv install
+RUN pipenv run pip install gunicorn
+
+FROM base as publish
+COPY --chown=webuser:webuser api/database.db /db/database.db
+USER webuser
+WORKDIR /app
+COPY --from=build /app .
+VOLUME /db/
+ENV MOVIE_KEY=5b02a80563fc534b7ee09b7324c63c28
+ENV SECRET_KEY=sf4t843g8shdflj2030adsjlfjdb09sduf209
+ENV SQLALCHEMY_DATABASE_URI=sqlite:////db/database.db
+CMD gunicorn -b 0.0.0.0:5000 --workers=4 app:app
