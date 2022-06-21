@@ -1,12 +1,12 @@
 <template>
-  <div class="container">
-    <b-button id="tooltip-reset-searches" variant="danger" @click="deleteSearchesPrelim"
+  <div class="reset-container">
+    <b-button id="tooltip-reset-searches" class="reset-btn" variant="danger" @click="deleteSearchesPrelim"
       >Reset Searches</b-button
     >
     <b-tooltip target="tooltip-reset-searches" triggers="hover">
       Resets only previously swiped movies and past searches! Your matches will remain saved.
     </b-tooltip>
-    <b-button id="tooltip-reset-everything" variant="danger" @click="deleteEverythingPrelim"
+    <b-button id="tooltip-reset-everything" class="reset-btn" variant="danger" @click="deleteEverythingPrelim"
       >Reset Everything</b-button
     >
     <b-tooltip target="tooltip-reset-everything" triggers="hover">
@@ -23,11 +23,11 @@
       <div class="delete-modal-title" slot="modal-title">
         <strong>Delete Confirmation</strong>
       </div>
-      <p v-if="deleteSearches" class="my-4">
+      <p v-if="deleteSearches" class="my-4 reset-modal-text">
         Are you sure you want to reset<br />
         <strong>all searches</strong> ?
       </p>
-      <p v-if="deleteEverything" class="my-4">
+      <p v-if="deleteEverything" class="my-4 reset-modal-text">
         Are you sure you want to reset<br />
         <strong>everything</strong> ?
       </p>
@@ -109,8 +109,16 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.reset-container {
   margin-top: 2rem;
-  margin-bottom: 2 rem;
+  padding-bottom: 2rem;
+}
+
+.reset-btn {
+  margin-left: 1rem;
+}
+
+.reset-modal-text {
+  color: black;
 }
 </style>

@@ -122,7 +122,7 @@ export default {
   cursor: pointer;
   position: relative;
   width: minmax(190px, 1fr);
-  border: 1px solid beige;
+  border: 1px solid gray;
   border-radius: 9px;
 }
 

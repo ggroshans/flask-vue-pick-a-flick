@@ -27,7 +27,7 @@
           </b-nav-item>
           <b-nav-item
             class="nav-item-container"
-            v-if="isLoggedIn && !(this.$route.name == 'Genres')"
+            v-if="isLoggedIn && !(this.$route.name == 'Genres') && !(this.$route.name == 'Profile')"
           >
             <router-link class="nav-router-link" to="/user/profile"
               ><b-icon icon="list"></b-icon> Your Movies

@@ -38,7 +38,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.45);
   background-size: cover;
   background-attachment: fixed;
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
   z-index: 2 !important;
 }
 </style>

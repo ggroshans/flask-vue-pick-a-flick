@@ -3,7 +3,7 @@ body {
   background-image: url("../images/lighttheme.jpg");
   background-size:cover;
   background-attachment: fixed;
-  color: beige;
+  color: beige; 
   z-index: 0 !important;
 }
 
