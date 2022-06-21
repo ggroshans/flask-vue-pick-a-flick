@@ -17,8 +17,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Splash',
-      component: Splash,
+      name: 'Login', //scrapped the splash screen 
+      component: Login,
     },
     {
       path: '/login',
