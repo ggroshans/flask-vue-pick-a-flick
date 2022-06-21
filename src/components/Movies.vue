@@ -68,6 +68,7 @@
 <script>
 /* eslint-disable */
 import { Vue2InteractDraggable } from "vue2-interact";
+import router from '../router';
 import requestPath from '../fetchUtility';
 export default {
   data() {
@@ -164,6 +165,14 @@ export default {
     }
   },
   async beforeCreate() {
+
+    if (!this.$store.getters.getAuthStatus) {
+      router.push("/");
+      $cookies.remove("access_token_cookie");
+      $cookies.remove("csrf_access_token");
+    }
+
+
     const resp = await fetch(requestPath("genre_query"), {
       method: "POST",
       credentials: "include",

@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import router from '../router';
 export default {
   data() {
     return {
@@ -139,6 +140,14 @@ export default {
       console.log(this.$store);
       return this.$store.getters.getCurrentMovie;
     },
+  },
+    created() {
+    if (!this.$store.getters.getAuthStatus) {
+      console.log("HHHHELLO");
+      $cookies.remove("access_token_cookie");
+      $cookies.remove("csrf_access_token");
+      router.push("/");
+    }
   },
 };
 </script>
