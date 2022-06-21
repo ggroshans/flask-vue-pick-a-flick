@@ -192,6 +192,7 @@ export default {
 
 .submit-genres-btn {
   margin-top: 2rem;
+  margin-bottom: 2rem;
   font-weight: 800;
 }
 </style>

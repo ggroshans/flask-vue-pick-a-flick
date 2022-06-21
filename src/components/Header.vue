@@ -133,6 +133,7 @@ export default {
 h1 {
   font-family: "Lobster";
   font-size: 4.5rem;
+  margin: 2rem 0rem;
 }
 
 .user-dropdown {

@@ -11,13 +11,13 @@ import Header from "./components/Header.vue";
 export default {
   name: "App",
   components: {
-    Header
+    Header,
   },
   computed: {
     darkMode() {
       return this.$store.getters.getDarkMode;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -34,8 +34,11 @@ export default {
   text-align: center;
 }
 .filter {
-  height: 100vh;
+  min-height: 100vh;
   background-color: rgba(0, 0, 0, 0.45);
+  background-size: cover;
+  background-attachment: fixed;
+    background-repeat: no-repeat;
   z-index: 2 !important;
 }
 </style>

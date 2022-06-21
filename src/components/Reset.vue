@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <b-button id="tooltip-reset-searches" variant="danger" @click="deleteSearchesPrelim"
       >Reset Searches</b-button
     >
@@ -108,4 +108,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  margin-top: 2rem;
+  margin-bottom: 2 rem;
+}
+</style>

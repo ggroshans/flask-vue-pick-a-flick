@@ -1,0 +1,14 @@
+version: '2'
+services:
+    backend:
+        image: ghcr.io/ggroshansii/movie-date-app:backend-latest
+        ports:
+            - "5000:5000"
+        volumes:
+            - ./api:/db
+    frontend:
+        image: ghcr.io/ggroshansii/movie-date-app:frontend-latest
+        ports:
+            - "8080:8080"
+        depends_on:
+            - backend
