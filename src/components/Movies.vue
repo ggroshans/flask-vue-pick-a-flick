@@ -11,10 +11,11 @@
           :interact-max-rotation="15"
           :interact-x-threshold="200"
           :interact-y-threshold="200"
-          class="rounded-borders shadow card"
+          class="rounded-borders card"
           @draggedRight="swipedRight"
           @draggedLeft="swipedLeft"
         >
+        <div class="content-container">
           <div class="genre-pill-container">
             <b-badge pill variant="dark" v-for="genreObj in currentGenres" :key="genreObj.id" class="genre-pill">
               {{ genreObj.name }}
@@ -23,6 +24,8 @@
           <div class="movie-info">
             <p>{{ movieList[0].overview }}</p>
           </div>
+        </div>
+
         </Vue2InteractDraggable>
       </div>
     </section>
@@ -291,13 +294,26 @@ li {
   border-radius: 12px;
 }
 
+.content-container {
+  position: relative;
+  top: 150px;
+  left: 50px;
+  width: 350px;
+  height: 200px;
+}
+
 .card {
-  width: 300px;
+  width: 450px;
   height: 400px;
+  background-image: url("https://www.pinclipart.com/picdir/big/35-353436_clapperboard-group-clapper-clip-art-library-claqueta-de.png");
+  background-repeat:no-repeat;
+  background-size: 375px 400px;
+  background-position: center;
+  background-color: white;
   color: white;
   text-align: left;
-  background-color: beige;
-  border: 1px solid black;
+  background-color: transparent;
+  border: none;
 
 }
 
@@ -309,7 +325,7 @@ li {
   width: 100%;
   padding: 1rem;
   color: black;
-  overflow: scroll;
+  overflow: auto;
   padding-top: 1rem;
 }
 
