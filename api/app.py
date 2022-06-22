@@ -38,6 +38,7 @@ app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.config['JWT_CSRF_IN_COOKIES'] = True
 
+print("SQLALCHEMY DB URI", app.config['SQLALCHEMY_DATABASE_URI'])
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
