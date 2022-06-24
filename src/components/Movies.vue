@@ -297,9 +297,10 @@ li {
 .content-container {
   position: relative;
   top: 150px;
-  left: 50px;
+  left: 52px;
   width: 350px;
-  height: 200px;
+  height: 240px;
+  background-color: white;
 }
 
 .card {
@@ -314,7 +315,7 @@ li {
   text-align: left;
   background-color: transparent;
   border: none;
-  /* touch-action: none; */
+  touch-action: none;
 }
 
 .movie-info {
