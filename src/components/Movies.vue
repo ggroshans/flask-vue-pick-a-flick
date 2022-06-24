@@ -314,7 +314,7 @@ li {
   text-align: left;
   background-color: transparent;
   border: none;
-  touch-action: none;
+  /* touch-action: none; */
 }
 
 .movie-info {
