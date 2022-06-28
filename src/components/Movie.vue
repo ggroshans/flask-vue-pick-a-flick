@@ -3,23 +3,46 @@
     <div class="row">
       <div class="col">
         <img
+          class="movie-cover"
           :src="'https://image.tmdb.org/t/p/w500' + getCurrentMovie.poster_path"
         />
       </div>
       <div class="col movie-details-container">
-        <h2>Movie Title</h2>
-        <p>{{ getCurrentMovie.title }}</p>
-        <h2>Release Date</h2>
-        <p>{{ getCurrentMovie.release_date }}</p>
-        <h2>Overview</h2>
-        <p>{{ getCurrentMovie.overview }}</p>
-        <h2>Genre:</h2>
-        <p>{{ genreNames(getCurrentMovie.genre_ids) }}</p>
-        <h2>Popularity:</h2>
-        <div class="progress-bar-container">
-          <div class="progress-bar" :style="{height: 25 + 'px', width: generatePopularityBar() + 'px', color: 'green' }"></div>
+        <div class="row">
+          <div class="col">
+            <h2 class="movie-detail-heading">Movie Title</h2>
+            <p>{{ getCurrentMovie.title }}</p>
+          </div>
+          <div class="col">
+            <h2 class="movie-detail-heading">Release Date</h2>
+            <p>{{ getCurrentMovie.release_date }}</p>
+          </div>
         </div>
-        <h2>Where can I watch?</h2>
+
+        <h2 class="movie-detail-heading text-center">Overview</h2>
+        <p>{{ getCurrentMovie.overview }}</p>
+
+        <div class="row">
+          <div class="col">
+            <h2 class="movie-detail-heading">Genre:</h2>
+            <p>{{ genreNames(getCurrentMovie.genre_ids) }}</p>
+          </div>
+          <div class="col">
+            <h2 class="movie-detail-heading">Popularity:</h2>
+            <div class="progress-bar-container">
+              <div
+                class="progress-bar"
+                :style="{
+                  height: 25 + 'px',
+                  width: generatePopularityBar() + 'px',
+                  color: 'green',
+                }"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="movie-detail-heading">Where can I watch?</h2>
         <p>
           <a
             :href="
@@ -30,12 +53,11 @@
         </p>
       </div>
     </div>
-    {{ getCurrentMovie }}
   </div>
 </template>
 
 <script>
-import router from '../router';
+import router from "../router";
 export default {
   data() {
     return {
@@ -129,21 +151,17 @@ export default {
       return genreNames.join(", ");
     },
     generatePopularityBar() {
-      let percentage = ((this.getCurrentMovie.vote_average * 10) / 100) * 500;
-      console.log(percentage)
+      let percentage = ((this.getCurrentMovie.vote_average * 10) / 100) * 200;
       return percentage;
-    }
+    },
   },
   computed: {
     getCurrentMovie() {
-      console.log(this.$store.getters.getCurrentMovie);
-      console.log(this.$store);
       return this.$store.getters.getCurrentMovie;
     },
   },
-    created() {
+  created() {
     if (!this.$store.getters.getAuthStatus) {
-      console.log("HHHHELLO");
       $cookies.remove("access_token_cookie");
       $cookies.remove("csrf_access_token");
       router.push("/");
@@ -155,16 +173,46 @@ export default {
 <style scoped>
 .movie-details-container {
   text-align: left;
+  background-color: rgba(255,255,255, 0.75);
+  color: black;
+  padding: 2rem;
+  border-radius: 20px;
+  margin: 2rem auto;
+  max-width: 400px;
+  position: absolute;
+  top: 175px;
+  right: 105px;
+  height: 599px;
+  z-index: 1;
 }
+
+.movie-details-container:hover{ 
+  z-index: 3;
+}
+
+ .movie-detail-heading {
+  font-size: 1.5rem;
+ }
 
 .progress-bar-container {
   background-color: lightgray;
   height: 25px;
-  width: 500px;
+  width: 200px;
 }
 
 .progress-bar {
   background-color: green;
 }
 
+.movie-cover {
+  border-radius: 20px;
+  max-width: 400px;
+  position: relative;
+  z-index: 2;
+  transition: 1s ease all;
+}
+
+.movie-cover:hover {
+  opacity: 0;
+}
 </style>

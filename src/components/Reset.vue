@@ -1,7 +1,7 @@
 <template>
   <div class="reset-container">
     <b-button id="tooltip-reset-searches" class="reset-btn" variant="danger" @click="deleteSearchesPrelim"
-      >Reset Searches</b-button
+      >Reset Search History</b-button
     >
     <b-tooltip target="tooltip-reset-searches" triggers="hover">
       Resets only previously swiped movies and past searches! Your matches will remain saved.

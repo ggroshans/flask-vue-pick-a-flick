@@ -33,7 +33,6 @@
     <b-modal
       v-model="matchModal"
       @hidden="onHidden"
-      size="md"
       header-bg-variant="dark"
       header-text-variant="light"
       body-bg-variant="light"
@@ -55,7 +54,7 @@
           :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
           alt=""
           class="img-fluid"
-          style="width:100%; max-height: 600px"
+          style="width:100%; max-height: 475px"
         />
       </div>
       <div slot="modal-footer">
@@ -294,6 +293,8 @@ li {
   border-radius: 12px;
 }
 
+
+
 .content-container {
   position: relative;
   top: 150px;
@@ -301,6 +302,8 @@ li {
   width: 350px;
   height: 240px;
   background-color: white;
+  z-index: 0;
+  touch-action: none;
 }
 
 .card {
@@ -316,37 +319,40 @@ li {
   background-color: transparent;
   border: none;
   touch-action: none;
+  z-index: 2;
 }
 
 .movie-info {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 100%;
+  height: 240px;
   width: 100%;
   padding: 1rem;
   color: black;
   overflow: auto;
   padding-top: 1rem;
+  touch-action: none;
 }
 
 .movie-info > p {
-  margin-top: 1rem;
+  height: 190px;
+  overflow: auto;
+  touch-action: none;
 }
 
-.genre-pill-container {
-  padding-bottom: 1rem;
-}
+.genre-pill-container {}
 
 .genre-pill {
   padding-top: 6px;
   margin-top: 0.5rem;
   margin-left: .25rem;;
   background-color: gray;
+  touch-action: none;
 }
 
 >>> .modal-dialog {
-  max-width: 400px;
+  max-width: 350px;
 }
 >>> .modal-title {
   width: 100%;

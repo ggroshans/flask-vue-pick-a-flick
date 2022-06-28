@@ -14,7 +14,6 @@ export default {
   methods: {},
   created() {
     if (!this.$store.getters.getAuthStatus) {
-      console.log("HHHHELLO");
       $cookies.remove("access_token_cookie");
       $cookies.remove("csrf_access_token");
       router.push("/");
