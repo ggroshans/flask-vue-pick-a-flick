@@ -178,13 +178,13 @@ export default {
   padding: 2rem;
   border-radius: 20px;
   margin: 2rem auto;
-  max-width: 400px;
+  max-width: 395px;
   position: fixed;
   top: 20%;
   transform: translateY(-20%);
   left: 50%;
   transform: translateX(-50%);
-  height: 594px;
+  height: 595px;
   z-index: 1;
 }
 
@@ -210,7 +210,8 @@ export default {
 .movie-cover {
   border-radius: 20px;
   max-width: 400px;
-    margin: 2rem auto;
+  margin: 2rem auto;
+  height: 595px;
   position: fixed;
   top: 20%;
   transform: translateY(-20%);
