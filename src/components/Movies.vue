@@ -54,7 +54,7 @@
           :src="'https://image.tmdb.org/t/p/w500' + movieList[0].poster_path"
           alt=""
           class="img-fluid"
-          style="width:100%; max-height: 475px"
+          style="width:100%; max-height: 500px"
         />
       </div>
       <div slot="modal-footer">
@@ -352,7 +352,8 @@ li {
 }
 
 >>> .modal-dialog {
-  max-width: 350px;
+  max-width: 400px;
+  margin-top: 5rem;
 }
 >>> .modal-title {
   width: 100%;
