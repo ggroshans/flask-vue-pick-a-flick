@@ -173,26 +173,29 @@ export default {
 <style scoped>
 .movie-details-container {
   text-align: left;
-  background-color: rgba(255,255,255, 0.75);
+  background-color: rgba(255, 255, 255, 0.45);
   color: black;
   padding: 2rem;
   border-radius: 20px;
   margin: 2rem auto;
   max-width: 400px;
-  position: absolute;
-  top: 175px;
-  right: 105px;
-  height: 599px;
+  position: fixed;
+  top: 20%;
+  transform: translateY(-20%);
+  left: 50%;
+  transform: translateX(-50%);
+  height: 594px;
   z-index: 1;
 }
 
-.movie-details-container:hover{ 
+.movie-details-container:hover {
   z-index: 3;
 }
 
- .movie-detail-heading {
+.movie-detail-heading {
   font-size: 1.5rem;
- }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
 .progress-bar-container {
   background-color: lightgray;
@@ -207,7 +210,12 @@ export default {
 .movie-cover {
   border-radius: 20px;
   max-width: 400px;
-  position: relative;
+    margin: 2rem auto;
+  position: fixed;
+  top: 20%;
+  transform: translateY(-20%);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
   transition: 1s ease all;
 }
