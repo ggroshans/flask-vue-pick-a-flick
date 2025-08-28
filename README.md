@@ -15,9 +15,38 @@
 
 ---
 
-## 🛠️ Technologies Used
+## 🏛️ Architecture
 
-This is a full-stack application built with a modern web stack.
+This project is a full-stack application structured as a **monorepo**, containing both the frontend and backend code. The entire application is containerized using **Docker** and orchestrated with **Docker Compose**, allowing for a simple and consistent setup process.
+
+```mermaid
+graph TD
+    subgraph "User's Browser"
+        A[Vue.js Frontend]
+    end
+
+    subgraph "Docker Environment"
+        B(Flask Backend API)
+        C[(SQLite Database)]
+    end
+
+    subgraph "External Services"
+        D["The Movie Database (TMDb) API"]
+    end
+
+    A -- HTTP Requests --> B
+    B -- Fetches Movie Data --> D
+    B -- Persists User Data --> C
+```
+
+-   **Frontend**: A **Vue.js (v2)** single-page application that provides the user interface.
+-   **Backend**: A **Flask** API that handles user authentication, fetches movie data from the external TMDb API, and manages user watchlists.
+-   **Database**: A **SQLite** database for storing user information and saved movies.
+-   **Containerization**: Both the frontend and backend services are containerized in their own Docker images and managed by a single `docker-compose.yaml` file for easy local development and deployment.
+
+---
+
+## 🛠️ Technologies Used
 
 #### Frontend
 
@@ -94,17 +123,21 @@ npm run dev
 # build for production with minification
 npm run build
 ```
+
 ---
-##  📡 API Endpoints
-### The Flask backend provides the following RESTful API endpoints:
-| Method   | Endpoint           | Description                                    | Auth Required |
-| :------- | :----------------- | :--------------------------------------------- | :------------ |
-| `POST`   | `/register`        | Register a new user.                           | No            |
-| `POST`   | `/login`           | Authenticate a user and return a JWT.          | No            |
-| `POST`   | `/logout`          | Log out the current user.                      | Yes           |
+
+## 📡 API Endpoints
+
+The Flask backend provides the following RESTful API endpoints:
+
+| Method   | Endpoint           | Description                                  | Auth Required |
+| :------- | :----------------- | :------------------------------------------- | :------------ |
+| `POST`   | `/register`        | Register a new user.                         | No            |
+| `POST`   | `/login`           | Authenticate a user and return a JWT.        | No            |
+| `POST`   | `/logout`          | Log out the current user.                    | Yes           |
 | `POST`   | `/movie_list`      | Get a list of movies based on selected genres. | Yes           |
-| `POST`   | `/save_movie`      | Save a liked movie to the user's profile.      | Yes           |
-| `DELETE` | `/delete_movie`    | Remove a movie from the user's profile.        | Yes           |
-| `GET`    | `/user_movie_list` | Get all movies saved by the current user.      | Yes           |
+| `POST`   | `/save_movie`      | Save a liked movie to the user's profile.    | Yes           |
+| `DELETE` | `/delete_movie`    | Remove a movie from the user's profile.      | Yes           |
+| `GET`    | `/user_movie_list` | Get all movies saved by the current user.    | Yes           |
 | `POST`   | `/swiped`          | Record a movie ID that the user has swiped on. | Yes           |
-| `GET`    | `/swiped`          | Get all movie IDs the user has swiped on.      | Yes           |
+| `GET`    | `/swiped`          | Get all movie IDs the user has swiped on.    | Yes           |
